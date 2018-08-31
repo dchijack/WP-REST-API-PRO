@@ -2,6 +2,8 @@
 
 基于 [守望轩](https://github.com/iamxjb/wp-rest-api-for-app) 开源 WordPress 版微信小程序插件，采用 WordPress 果酱开发的插件 [WPJAM BASIC](https://wordpress.org/plugins/wpjam-basic/) 框架
 
+技术支持：https://www.imahui.com
+
 ## 使用方法
 
 1、安装 WPJAM BASIC 插件并激活启用
