@@ -18,7 +18,7 @@
 
 ## 体验小程序
 
-![V微语录](https://github.com/dchijack/WP-REST-API-PRO/raw/master/vyulu.jpg) ![国际航空查询](https://github.com/dchijack/WP-REST-API-PRO/raw/master/cazixun.jpg) ![艾码汇](https://github.com/dchijack/WP-REST-API-PRO/raw/master/imahui.jpg)
+![V微语录](https://github.com/dchijack/WP-REST-API/raw/master/vyulu.jpg) ![国际航空查询](https://github.com/dchijack/WP-REST-API/raw/master/cazixun.jpg) ![艾码汇](https://github.com/dchijack/WP-REST-API/raw/master/imahui.jpg)
 
 ## 注意事项
 
