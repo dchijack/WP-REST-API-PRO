@@ -43,6 +43,24 @@ if (wp_get_option('formats')) {
 	$formats = wp_get_option('formats');
 	add_theme_support( 'post-formats', explode(',',$formats) );
 }
+// 描述清理HTML标签
+if (wp_get_option('deletehtml')) {
+	function deletehtml($description) {
+		$description = trim($description);
+		$description = strip_tags($description,"");
+		return ($description);
+	}
+	add_filter('category_description', 'deletehtml');
+}
+// 图片上传重命名
+if (wp_get_option('reupload')) {
+	function git_upload_filter($file) {
+		$time = date("YmdHis");
+		$file['name'] = $time . "" . mt_rand(1, 100) . "." . pathinfo($file['name'], PATHINFO_EXTENSION);
+		return $file;
+	}
+	add_filter('wp_handle_upload_prefilter', 'git_upload_filter');
+}
 // 时间格式
 function time_tran($the_time) {
     $now_time = date("Y-m-d H:i:s",time()+8*60*60); 

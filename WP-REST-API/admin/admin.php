@@ -42,7 +42,7 @@ add_filter('wpjam_settings',function($wpjam_settings){
 					'appid'=>array('title'=>'微信小程序 AppId','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'微信小程序 AppId 需要到微信小程序后台获取'),
 					'secretkey'=>array('title'=>'微信小程序 AppSecret ','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'微信小程序 AppSecret 需要到微信小程序后台获取'),
 					'swipe'=>array('title'=>'小程序焦点幻灯片','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'焦点幻灯片文章 ID 需要到网站后台查看获取'),
-					'formats'=>array('title'=>'文章格式类型','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'aside: 日志, gallery: 相册, link: 链接, image: 图像, quote: 引语, status: 状态, video: 视频, audio: 音频, chat: 聊天'),
+					'formats'=>array('title'=>'文章格式类型','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'aside, gallery, link, image, quote, status, video, audio, chat'),
 					'meta_list'=>array('title'=>'小程序自定义栏目','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'自定义标签 Key , 使用英文 "," 逗号隔开。注意：输助选项如果禁用 meta 标签，则此处设置无效'),
 					'prasie'=>array('title'=>'赞赏通知信息','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'用户赞赏后发送的消息模板内容。比如：谢谢赞赏，你的支持是我前进的动力'),
 					'use_role'=>array('title'=>'微信授权用户组','type'=>'select','options'=>array('subscriber'=>'订阅组','contributor'=>'投稿组','author'=>'作者组','editor'=>'编辑组')),
@@ -63,6 +63,8 @@ add_filter('wpjam_settings',function($wpjam_settings){
 					'post_meta'=>array('title'=>'文章自定义标签','type'=>'checkbox','description'=>'是否禁止文章输出 meta 标签项目'),
 					'post_prev'=>array('title'=>'文章上下篇','type'=>'checkbox','description'=>'是否开启文章输出上一篇及下一篇'),
 					'qvideo'=>array('title'=>'解析腾讯视频','type'=>'checkbox','description'=>'视频格式文章,开启解析腾讯视频,仅支持一个视频'),
+					'deletehtml'=>array('title'=>'清理HTML标签','type'=>'checkbox','description'=>'是否开启清理分类描述 HTML 标签'),
+					'reupload'=>array('title'=>'图片重命名','type'=>'checkbox','description'=>'是否开启上传图片重命名(集成大胡子主题功能)注意主题是否有冲突'),
 				),
 			),
 			'adsense-setting'=>array(
