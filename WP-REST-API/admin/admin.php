@@ -64,7 +64,7 @@ add_filter('wpjam_settings',function($wpjam_settings){
 					'post_prev'=>array('title'=>'文章上下篇','type'=>'checkbox','description'=>'是否开启文章输出上一篇及下一篇'),
 					'qvideo'=>array('title'=>'解析腾讯视频','type'=>'checkbox','description'=>'视频格式文章,开启解析腾讯视频,仅支持一个视频'),
 					'deletehtml'=>array('title'=>'清理HTML标签','type'=>'checkbox','description'=>'是否开启清理分类描述 HTML 标签'),
-					'reupload'=>array('title'=>'图片重命名','type'=>'checkbox','description'=>'是否开启上传图片重命名(集成大胡子主题功能)注意主题是否有冲突'),
+					'reupload'=>array('title'=>'图片重命名','type'=>'checkbox','description'=>'是否开启上传图片重命名,注意主题是否有冲突'),
 				),
 			),
 			'adsense-setting'=>array(
