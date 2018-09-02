@@ -33,3 +33,10 @@
 ![广告功能](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-adsense.png)
 
 ![API说明](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-about.png)
+
+# 更新日志
+
+2018.9.2
+
+> 修复文件包含 Bug；
+> 移动所有赞赏 API；

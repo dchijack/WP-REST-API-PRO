@@ -119,10 +119,6 @@ function wp_basic_about_page(){ ?>
 	<p>微信 OPENID API：<?php echo site_url(); ?>/wp-json/wechat/v1/user/openid</p>
 	<h3>消息相关 API</h3>
 	<p>发送消息 API：<?php echo site_url(); ?>/wp-json/wechat/v1/message/send</p>
-	<h3>赞赏相关 API</h3>
-	<p>文章赞赏 API：<?php echo site_url(); ?>/wp-json/wechat/v1/praise/post</p>
-	<p>赞赏用户 API：<?php echo site_url(); ?>/wp-json/wechat/v1/praise/user</p>
-	<p>所有赞赏 API：<?php echo site_url(); ?>/wp-json/wechat/v1/praise/all</p>
 	<h3>海报相关 API</h3>
 	<p>生成二维码 API：<?php echo site_url(); ?>/wp-json/wechat/v1/qrcode/creat</p>
 	<h3>广告相关 API</h3>

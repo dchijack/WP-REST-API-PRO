@@ -18,7 +18,6 @@ include(WP_REST_API.'inc/comments.php');
 include(WP_REST_API.'inc/message.php');
 include(WP_REST_API.'inc/openid.php');
 include(WP_REST_API.'inc/posts.php');
-include(WP_REST_API.'inc/praise.php');
 include(WP_REST_API.'inc/prefix.php');
 include(WP_REST_API.'inc/random.php');
 include(WP_REST_API.'inc/subscribe.php');
