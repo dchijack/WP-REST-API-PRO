@@ -11,6 +11,7 @@ Author URI: https://www.imahui.com/
 define('WP_REST_API', plugin_dir_path(__FILE__));
 // WP REST API MENU
 include(WP_REST_API.'admin/admin.php');
+include(WP_REST_API.'admin/about.php');
 include(WP_REST_API.'inc/category.php');
 // WP REST API FUNCTIONS
 include(WP_REST_API.'inc/adsense.php');
