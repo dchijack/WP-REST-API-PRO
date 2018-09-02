@@ -46,7 +46,6 @@ add_filter('wpjam_settings',function($wpjam_settings){
 					'swipe'=>array('title'=>'小程序焦点幻灯片','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'焦点幻灯片文章 ID 需要到网站后台查看获取'),
 					'formats'=>array('title'=>'文章格式类型','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'aside, gallery, link, image, quote, status, video, audio, chat'),
 					'meta_list'=>array('title'=>'小程序自定义栏目','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'自定义标签 Key , 使用英文 "," 逗号隔开。注意：输助选项如果禁用 meta 标签，则此处设置无效'),
-					'prasie'=>array('title'=>'赞赏通知信息','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'用户赞赏后发送的消息模板内容。比如：谢谢赞赏，你的支持是我前进的动力'),
 					'use_role'=>array('title'=>'微信授权用户组','type'=>'select','options'=>array('subscriber'=>'订阅组','contributor'=>'投稿组','author'=>'作者组','editor'=>'编辑组')),
 					'prefix'=>array('title'=>'默认缩略图','type'=>'img','item_type'=>'url'),
 				),
