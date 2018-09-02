@@ -16,12 +16,10 @@ function rest_api_admin_pages($wpjam_pages){
 		'menu_title'	=> '小程序设置',	
 		'function'		=> 'option',
 		'option_name'	=> 'wp-api',
-		'page_file'		=> WP_REST_API.'admin.php'
 	];
 	$subs['api-about']	= [
 		'menu_title'	=> '小程序 API',	
 		'function'		=> 'wp_basic_about_page',	
-		'page_file'		=> WP_REST_API.'admin.php',
 	];
 	$wpjam_pages['api-settings']	= [
 		'menu_title'	=> '小程序',	
