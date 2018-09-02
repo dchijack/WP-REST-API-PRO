@@ -70,9 +70,9 @@ function post_custom_fields_rest($data, $post, $request) {
 			ORDER BY  RAND()
 			LIMIT 5";
 			$related_posts = $wpdb->get_results($sql);
-			$_data['post_related'] = $related_posts;
+			$_data['related'] = $related_posts;
     } else{
-        $_data['post_related']=null;
+        $_data['related']=null;
     }
 	//-----------------------------------------------------------
 	if (get_setting_option('post_prev')) {
