@@ -34,14 +34,14 @@
 
 ![API说明](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-about.png)
 
-# 更新日志
+## 更新日志
 
 2018.9.2
 
 > 修复文件包含 Bug；
 > 移动所有赞赏 API；
 
-# 微信公众号
+## 微信公众号
 
 > 欢迎关注个人微信公众号，扫描下方二维码。后期关于插件，小程序等信息，将第一时间发布在公众号或个人博客：https://www.imahui.com
 
