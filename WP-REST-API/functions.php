@@ -41,7 +41,7 @@ function wp_get_option($name) {
 // 文章格式类型
 if (wp_get_option('formats')) {
 	$formats = wp_get_option('formats');
-	add_theme_support( 'post-formats', explode(',',$formats) );
+	add_theme_support( 'post-formats', $formats );
 }
 // 描述清理HTML标签
 if (wp_get_option('deletehtml')) {
