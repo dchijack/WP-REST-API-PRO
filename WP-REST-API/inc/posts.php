@@ -55,32 +55,6 @@ function post_custom_fields_rest($data, $post, $request) {
 		//-----------------------------------------------------------
 	}
     $_data['avatar']= $avatarurls;
-	//--------------------相同 Tags 文章-----------------------------
-	date_default_timezone_set('Asia/Shanghai');
-    $limitday= date("Y-m-d H:i:s", strtotime("-5 year")); 
-    $today = date("Y-m-d H:i:s"); //获取今天日期时间
-    $tags= $_data["tags"];
-    if(count($tags)>0) {
-        $tags=implode(",",$tags);
-        $sql="
-			SELECT DISTINCT ID, post_title
-			FROM ".$wpdb->posts." , ".$wpdb->term_relationships.", ".$wpdb->term_taxonomy."
-			WHERE ".$wpdb->term_taxonomy.".term_taxonomy_id =  ".$wpdb->term_relationships.".term_taxonomy_id
-			AND ID = object_id
-			AND taxonomy = 'post_tag'
-			AND post_status = 'publish'
-			AND post_type = 'post'
-			AND term_id IN (" . $tags . ")
-			AND ID != '" . $post_id . "'
-			AND post_date BETWEEN '".$limitday."' AND '".$today."' 
-			ORDER BY  RAND()
-			LIMIT 5";
-			$related_posts = $wpdb->get_results($sql);
-			$_data['related'] = $related_posts;
-    } else{
-        $_data['related']=null;
-    }
-	//-----------------------------------------------------------
 	if (get_setting_option('post_prev')) {
 		$_data['next_id'] = !empty($next_post->ID)?$next_post->ID:null;
 		$_data['next_title'] = !empty($next_post->post_title)?$next_post->post_title:null;
