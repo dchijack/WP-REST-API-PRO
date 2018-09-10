@@ -78,7 +78,7 @@ function send_message_data($openid,$template_id,$postid,$form_id,$total_fee,$fla
 						"color" =>"#173177"
                     ),
                     "keyword2"=>array(
-                        "value"=> get_setting_option('prasie'),
+                        "value"=> '谢谢支持，你的赞赏是我前进的动力',
                         "color"=> "#173177"
                     )
                 );  
