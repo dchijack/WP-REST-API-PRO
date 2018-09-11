@@ -50,14 +50,14 @@ function get_swipe_post_data(){
 			$_data['comments']= $post_comment;
 			$_data['thumbses'] = $post_thumbs;
 			if (get_setting_option('post_meta')) {
-				if(wpjam_get_setting('wpjam_cdn_setting','cdn_name')){
+				if(wpjam_get_setting('wpjam-cdn','cdn_name')){
 					$_data["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
 				} else {
 					$_data["thumbnail"] = $post_thumbnail;
 				}
 				$_data["views"] = $post_views;
 			} else {
-				if(wpjam_get_setting('wpjam_cdn_setting','cdn_name')){
+				if(wpjam_get_setting('wpjam-cdn','cdn_name')){
 					$_data["meta"]["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
 				} else {
 					$_data["meta"]["thumbnail"] = $post_thumbnail;
