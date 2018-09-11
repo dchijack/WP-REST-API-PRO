@@ -93,7 +93,7 @@ function get_most_views_post_data($limit = 10) {
 		$_data['comments']= $post_comment;
 		$_data['thumbses'] = $post_thumbs;
 		if (get_setting_option('post_meta')) {
-			if(wpjam_get_setting('wpjam-extends','wpjam-qiniu.php')){
+			if(wpjam_get_setting('wpjam_cdn_setting','cdn_name')){
 				$_data["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
 			} else {
 				$_data["thumbnail"] = $post_thumbnail;
@@ -101,7 +101,7 @@ function get_most_views_post_data($limit = 10) {
 			$_data["views"] = $post_views;
 		} else {
 			//--------------------自定义标签-----------------------------
-			if(wpjam_get_setting('wpjam-extends','wpjam-qiniu.php')){
+			if(wpjam_get_setting('wpjam_cdn_setting','cdn_name')){
 				$_data["meta"]["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
 			} else {
 				$_data["meta"]["thumbnail"] = $post_thumbnail;

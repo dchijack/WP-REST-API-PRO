@@ -43,7 +43,7 @@ add_filter('wpjam_settings',function($wpjam_settings){
 				'fields'=> [
 					'appid'=>['title'=>'微信小程序 AppId','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'微信小程序 AppId 需要到微信小程序后台获取'],
 					'secretkey'=>['title'=>'微信小程序 AppSecret ','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'微信小程序 AppSecret 需要到微信小程序后台获取'],
-					'swipe'=>['title'=>'小程序焦点幻灯片','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'焦点幻灯片文章 ID 需要到网站后台查看获取'],
+					'swipe'=>['title'=>'小程序焦点幻灯片','type'=>'mu-text','class'=>'regular-text','rows'=>4,'description'=>'焦点幻灯片文章 ID 需要到网站后台查看获取'],
 					'formats'=>['title'=>'文章格式类型','type'=>'mu-text','class'=>'regular-text','rows'=>4,'description'=>'文章格式：aside, gallery, link, image, quote, status, video, audio, chat'],
 					'meta_list'=>['title'=>'小程序自定义栏目','type'=>'mu-text','class'=>'regular-text','rows'=>4,'description'=>'自定义标签 Key , 可以添加多个自定义标签。注意：输助选项如果禁用 meta 标签，则此处设置无效'],
 					'use_role'=>['title'=>'微信授权用户组','type'=>'select','options'=>['subscriber'=>'订阅组','contributor'=>'投稿组','WxAuthor'=>'微作者','author'=>'作者组','editor'=>'编辑组']],

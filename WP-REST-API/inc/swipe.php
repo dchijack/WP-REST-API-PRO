@@ -25,10 +25,10 @@ function getPostSwipe($request) {
 }
 function get_swipe_post_data(){
 	global $wpdb;
-    $postSwipeIds = get_setting_option('swipe');
+    $Swipe = get_setting_option('swipe');
 	$posts =array();    
-    if(!empty($postSwipeIds)) {
-		$sql=$wpdb->prepare("SELECT * from ".$wpdb->posts." where id in (%d)",$postSwipeIds);
+    if(!empty($Swipe)) {
+		$sql=$wpdb->prepare("SELECT * from ".$wpdb->posts." where id in (%d)",$Swipe);
         $_posts = $wpdb->get_results($sql);
         foreach ($_posts as $post) {
 			$post_id = (int)$post->ID;
@@ -50,14 +50,14 @@ function get_swipe_post_data(){
 			$_data['comments']= $post_comment;
 			$_data['thumbses'] = $post_thumbs;
 			if (get_setting_option('post_meta')) {
-				if(wpjam_get_setting('wpjam-extends','wpjam-qiniu.php')){
+				if(wpjam_get_setting('wpjam_cdn_setting','cdn_name')){
 					$_data["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
 				} else {
 					$_data["thumbnail"] = $post_thumbnail;
 				}
 				$_data["views"] = $post_views;
 			} else {
-				if(wpjam_get_setting('wpjam-extends','wpjam-qiniu.php')){
+				if(wpjam_get_setting('wpjam_cdn_setting','cdn_name')){
 					$_data["meta"]["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
 				} else {
 					$_data["meta"]["thumbnail"] = $post_thumbnail;
