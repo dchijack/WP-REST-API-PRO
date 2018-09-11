@@ -25,10 +25,10 @@ function getPostSwipe($request) {
 }
 function get_swipe_post_data(){
 	global $wpdb;
-    $Swipe = get_setting_option('swipe');
+    $Swipe = implode(",", get_setting_option('swipe'));
 	$posts =array();    
     if(!empty($Swipe)) {
-		$sql=$wpdb->prepare("SELECT * from ".$wpdb->posts." where id in (%d)",$Swipe);
+		$sql="SELECT * from ".$wpdb->posts." where id in ($Swipe)";
         $_posts = $wpdb->get_results($sql);
         foreach ($_posts as $post) {
 			$post_id = (int)$post->ID;
