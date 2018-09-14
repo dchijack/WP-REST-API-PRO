@@ -52,7 +52,7 @@ function get_random_post_data($limit = 10) {
 		if (!get_setting_option('post_excerpt')) { $_data["excerpt"]["rendered"] = $post_excerpt; }
 		$_data["date"] = $post_date;
 		$_data["link"] =$post_permalink;
-		$_data['comments']= $post_comment->total_comments;
+		$_data['comments']= $post_comment;
 		$_data['thumbses'] = $post_thumbs;
 		if (get_setting_option('post_meta')) {
 			if(wpjam_get_setting('wpjam-cdn','cdn_name')){
