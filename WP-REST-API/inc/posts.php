@@ -8,7 +8,6 @@ function post_custom_fields_rest($data, $post, $request) {
     $post_views = (int)get_post_meta($post_id, 'views',true);
 	$post_thumbnail = get_post_thumbnail($post_id);
 	$post_comment = wp_count_comments($post_id);
-	$content = $post->post_content;
 	$category = get_the_category($post_id);
 	$categoryId=$category[0]->term_id;
 	$next_post = get_next_post($categoryId, '', 'category');
@@ -27,7 +26,6 @@ function post_custom_fields_rest($data, $post, $request) {
 	} else {
 		unset($_data['content'] );   	
 	}
-	$_data['content']['rendered'] = $content;
 	$_data['category'] = $category[0]->cat_name;
 	$_data['comments'] = $post_comment->total_comments;
 	$_data['thumbses'] = $post_thumbs;
