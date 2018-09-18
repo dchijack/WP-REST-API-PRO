@@ -14,8 +14,6 @@ function rest_category_cover($data, $item, $request) {
     $temp = '';
     if($temp = get_term_meta($item->term_id,'cover',true)) {
         $category_cover_image = $temp; 
-    } else if($temp = get_term_meta($item->term_id,'thumbnail',true)) {
-        $category_cover_image = $temp;
     }
 	$data->data['cover'] = $category_cover_image;    
 	return $data;

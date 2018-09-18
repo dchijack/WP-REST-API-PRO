@@ -11,11 +11,11 @@
 add_action( 'rest_api_init', function () {
   register_rest_route( 'wechat/v1', 'views/random', array(
     'methods' => 'GET',
-    'callback' => 'getRandomPosts'    
+    'callback' => 'get_wp_post_by_rand'    
   ));
 });
-function getRandomPosts( $data ) {
-	$data=get_random_post_data(10); 
+function get_wp_post_by_rand(  ) {
+	$data=get_random_post_data($limit = 10); 
 	if ( empty( $data ) ) {
 		return new WP_Error( 'noposts', 'noposts', array( 'status' => 404 ) );
 	} 
