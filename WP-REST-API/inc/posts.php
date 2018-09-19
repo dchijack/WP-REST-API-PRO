@@ -1,4 +1,12 @@
 <?php
+/*
+ * 
+ * WordPres 连接微信小程序
+ * Author: JIANBO + Denis + 艾码汇
+ * github:  https://www.imahui.com
+ * 基于 守望轩 WP REST API For App 开源插件定制 , 使用 WPJAM BASIC 框架
+ * 
+ */
 // 定义Posts API
 add_filter( 'rest_prepare_post', 'post_custom_fields_rest', 10, 3 );
 function post_custom_fields_rest($data, $post, $request) {
