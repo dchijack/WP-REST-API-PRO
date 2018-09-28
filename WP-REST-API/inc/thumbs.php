@@ -178,7 +178,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'getMostThumbsUpPost'    
   ) );
 } );
-function getMostThumbsUpPost( $data ) {
+function getMostThumbsUpPost( ) {
 	$data=get_most_thumbsed_post_data(10); 
 	if ( empty( $data ) ) {
 		return new WP_Error( 'noposts', 'noposts', array( 'status' => 404 ) );

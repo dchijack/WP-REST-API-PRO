@@ -35,7 +35,7 @@ if (wp_get_option('custom_menu')) {
 			'has_archive' => false,    
 			'exclude_from_search' => true,
 			'menu_position' => 8,
-			'supports' => array(),
+			'supports' => $supports,
 			'menu_icon' => $icon,
 			'show_in_rest'       => true,
 			'rest_base'          => $singular,

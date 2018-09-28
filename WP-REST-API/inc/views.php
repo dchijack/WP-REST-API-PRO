@@ -55,7 +55,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'getMostViewsPosts'    
   ));
 });
-function getMostViewsPosts( $data ) {
+function getMostViewsPosts( ) {
 	$data=get_most_views_post_data(10); 
 	if ( empty( $data ) ) {
 		return new WP_Error( 'noposts', 'noposts', array( 'status' => 404 ) );
