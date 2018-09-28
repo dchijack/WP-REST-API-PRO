@@ -92,7 +92,7 @@ if (wp_get_option('custom_category')) {
 			'query_var'             => true,
 			'rewrite'               => array( 'slug' => $category ),
 			'show_in_rest'          => true,
-			'rest_base'             => $value['custom_category'],
+			'rest_base'             => $category,
 			'rest_controller_class' => 'WP_REST_Terms_Controller',
 		);
 		register_taxonomy( $category, array( $singular ), $args );
