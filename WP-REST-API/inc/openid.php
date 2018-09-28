@@ -64,7 +64,7 @@ function post_user_openid_data($js_code,$encryptedData,$iv,$avatarUrl,$nickname)
                             'nickname' => $nickname,
                             'user_nicename' => $nickname,
                             'display_name' => $nickname,
-							'user_email' => $passwd.'@qq.com',
+							'user_email' => $openid.'@qq.com',
 							'wxavatar' => $avatarUrl,
 							'openid' => $openid,
 							'role' => $role,

@@ -27,6 +27,7 @@ include(WP_REST_API.'inc/thumbnail.php');
 include(WP_REST_API.'inc/thumbs.php');
 include(WP_REST_API.'inc/usermeta.php');
 include(WP_REST_API.'inc/views.php');
+include(WP_REST_API.'inc/custom.php');
 // 腾讯视频解析
 if (wp_get_option('qvideo')) { 
 	include(WP_REST_API.'inc/video.php');

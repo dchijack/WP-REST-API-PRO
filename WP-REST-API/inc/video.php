@@ -31,4 +31,3 @@ function video_content_filter($content) {
 if (has_post_format( 'video' )) {
 	add_filter( 'the_content', 'video_content_filter' );
 }
-// add_theme_support( 'post-formats', array( 'aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat' ) ); // 支持的文章格式分别为：日志、相册、链接、图像、引语、状态、视频、音频、聊天

@@ -68,6 +68,18 @@ add_filter('wpjam_settings',function($wpjam_settings){
 					'reupload'=>['title'=>'图片重命名','type'=>'checkbox','description'=>'是否开启上传图片重命名,注意主题是否有冲突'],
 				],
 			],
+			'custom-posts'=>[
+				'title'=>'文章类型',
+				'summary'=>'<p>WordPress 自定义文章类型</p>',
+				'fields'=> [
+					'custom_menu'	=> ['title'=>'类型名称',	'type'=>'text','description'=>'自定义文章类型菜单名称'],
+					'custom_singular'	=> ['title'=>'类型别名',	'type'=>'text','description'=>'自定义文章类型别名,建议英文或拼音'],
+					'custom_category'	=> ['title'=>'分类别名',	'type'=>'text','description'=>'自定义文章类型分类别名,建议英文或拼音'],
+					'custom_tags'	=> ['title'=>'标签别名',	'type'=>'text','description'=>'自定义文章类型标签别名,建议英文或拼音'],
+					'custom_icon'	=> ['title'=>'图标ICON', 'type'=>'text', 'description'=>'Dashicons 图标, 可在 WPJAM - Dashicons 中查找使用'],
+					'custom_supports' => ['title'=>'支持类型',	'type'=>'mu-text','description'=>'title: 标题; editor: 内容; author: 作者; thumbnail: 特色图像; excerpt: 摘要; trackbacks: 引用; custom-fields: 自定义标签; comments: 评论; post-formats: 格式'],
+				],
+			],
 			'adsense-setting'=>[
 				'title'=>'广告功能',
 				'summary'=>'<p>微信小程序广告功能设置</p>',
