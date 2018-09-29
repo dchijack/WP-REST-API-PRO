@@ -32,7 +32,7 @@ function post_custom_fields_rest($data, $post, $request) {
 			$avatarurls[] = $_avatarurl;       
 		}
 	} else {
-		unset($_data['content'] );   	
+		if (get_setting_option('post_content')) {unset($_data['content'] ); }  	
 	}
 	$_data['category'] = $category[0]->cat_name;
 	$_data['comments'] = $post_comment->total_comments;

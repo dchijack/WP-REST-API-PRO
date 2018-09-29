@@ -57,6 +57,7 @@ add_filter('wpjam_settings',function($wpjam_settings){
 					'encomments'=>['title'=>'小程序评论功能','type'=>'checkbox','description'=>'是否开启小程序评论功能'],
 					'approved'=>['title'=>'小程序评论审核','type'=>'checkbox','description'=>'是否开启小程序评论审核'],
 					'user_users'=>['title'=>'小程序用户列表','type'=>'checkbox','description'=>'是否禁用小程序用户列表'],
+					'post_content'=>['title'=>'文章列表内容','type'=>'checkbox','description'=>'是否禁止文章列表输出 content 项目'],
 					'post_excerpt'=>['title'=>'文章摘要标签','type'=>'checkbox','description'=>'是否禁止文章输出 excerpt 摘要项目'],
 					'post_format'=>['title'=>'文章格式标签','type'=>'checkbox','description'=>'是否禁止文章输出 format 文章格式'],
 					'post_type'=>['title'=>'文章类型标签','type'=>'checkbox','description'=>'是否禁止文章输出 type 标签项目'],
