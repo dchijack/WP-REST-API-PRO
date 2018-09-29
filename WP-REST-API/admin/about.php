@@ -57,7 +57,7 @@ function wp_rest_api_dev(){ ?>
 	<p><a href="https://www.imahui.com/design/840.html" target="_blank">WordPress 连接微信小程序的插件</a>是 <a href="https://www.imahui.com/" target="_blank">艾码汇</a> 基于守望轩开源插件 <a href="https://github.com/iamxjb/wp-rest-api-for-app">wp-rest-api-for-app</a> 整合定制优化版。部分功能与守望轩原版相同，但是整体的数据展现方式有所不同，以及后台设置分别采用 <a href="http://blog.wpjam.com/project/wpjam-basic/" target="_blank">WPJAM BASIC</a> 插件框架以及普通设置版本。</p>
 	<h3>公众号</h3>
 	<p>欢迎关注个人微信公众号，关于 WordPress 连接微信小程序的插件以及相关小程序，以后将会在这里第一时间发布。</p>
-	<p><img src="https://www.imahui.com/uploads/gh_27bef5445476_258.jpg" /></p>
+	<p><img src="https://www.imahui.com/uploads/mpconsole-code.jpg" /></p>
 	</div>
 	<?php 
 }
