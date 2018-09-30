@@ -76,7 +76,7 @@ add_action( 'rest_api_init', function () {
 		'callback' => 'getMostCommentsPosts'    
 	));
 });
-function getMostCommentsPosts( $data ) {
+function getMostCommentsPosts( ) {
 	$data = get_most_comments_post_data(10); 
 	if (empty($data)) {
 		return new WP_Error( 'noposts', 'noposts', array( 'status' => 404 ) );
@@ -112,19 +112,11 @@ function get_most_comments_post_data($limit = 10) {
 		$_data['comments']= $post_comment;
 		$_data['thumbses'] = $post_thumbs;
 		if (get_setting_option('post_meta')) {
-			if(wpjam_get_setting('wpjam-cdn','cdn_name')){
-				$_data["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
-			} else {
-				$_data["thumbnail"] = $post_thumbnail;
-			}
+			$_data["thumbnail"] = $post_thumbnail;
 			$_data["views"] = $post_views;
 		} else {
 			//--------------------自定义标签-----------------------------
-			if(wpjam_get_setting('wpjam-cdn','cdn_name')){
-				$_data["meta"]["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
-			} else {
-				$_data["meta"]["thumbnail"] = $post_thumbnail;
-			}
+			$_data["meta"]["thumbnail"] = $post_thumbnail;
 			$_data["meta"]["views"] = $post_views;
 			$meta = get_setting_option('meta_list');
 			if (!empty($meta)) {
@@ -145,7 +137,7 @@ add_action( 'rest_api_init', function () {
 		'callback' => 'getNewCommentsPosts'
 	));
 });
-function getNewCommentsPosts($data) {
+function getNewCommentsPosts( ) {
 	$data = get_new_comments_post_data(10); 
 	if (empty( $data )) {
 		return new WP_Error( 'noposts', 'noposts', array( 'status' => 404 ) );
@@ -182,19 +174,11 @@ function get_new_comments_post_data($limit = 10) {
 		$_data['comments']= $post_comment;
 		$_data['thumbses'] = $post_thumbs;
 		if (get_setting_option('post_meta')) {
-			if(wpjam_get_setting('wpjam-cdn','cdn_name')){
-				$_data["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
-			} else {
-				$_data["thumbnail"] = $post_thumbnail;
-			}
+			$_data["thumbnail"] = $post_thumbnail;
 			$_data["views"] = $post_views;
 		} else {
 			//--------------------自定义标签-----------------------------
-			if(wpjam_get_setting('wpjam-cdn','cdn_name')){
-				$_data["meta"]["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
-			} else {
-				$_data["meta"]["thumbnail"] = $post_thumbnail;
-			}
+			$_data["meta"]["thumbnail"] = $post_thumbnail;
 			$_data["meta"]["views"] = $post_views;
 			$meta = get_setting_option('meta_list');
 			if (!empty($meta)) {
@@ -438,17 +422,16 @@ function get_comment_data($openid){
 		$_posts = $wpdb->get_results($sql);
         $posts =array();
         foreach ($_posts as $post) {
-			$post_id = $post->ID;
+            $post_id = $post->ID;
 			$post_thumbnail = get_post_thumbnail($post_id);
 			$post_views = (int)get_post_meta($post_id, 'views',true);
             $_data["id"]  = $post_id;
             $_data["title"]["rendered"] = $post->post_title;
-			if (!get_setting_option('post_meta')) {
-				if(wpjam_get_setting('wpjam-cdn','cdn_name')){
-					$_data["meta"]["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
-				} else {
-					$_data["meta"]["thumbnail"] = $post_thumbnail;
-				}
+			if (get_setting_option('post_meta')) {
+				$_data["thumbnail"] = $post_thumbnail;
+				$_data["views"] = $post_views;
+			} else {
+				$_data["meta"]["thumbnail"] = $post_thumbnail;
 				$_data['meta']["views"] = $post_views;
 				$meta = get_setting_option('meta_list');
 				if (!empty($meta)) {
@@ -456,13 +439,6 @@ function get_comment_data($openid){
 						$_data["meta"][$key] = get_post_meta( $post_id, $key ,true );
 					}
 				}
-			} else {
-				if(wpjam_get_setting('wpjam-cdn','cdn_name')){
-					$_data["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
-				} else {
-					$_data["thumbnail"] = $post_thumbnail;
-				}
-				$_data["views"] = $post_views;
 			}
             $posts[]=$_data;
         }

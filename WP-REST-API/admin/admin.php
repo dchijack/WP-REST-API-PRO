@@ -54,6 +54,7 @@ add_filter('wpjam_settings',function($wpjam_settings){
 				'title'=>'辅助选项',
 				'summary'=>'<p>WordPress 自定义 API 选项</p>',
 				'fields'=> [
+					'enposts'=>['title'=>'小程序投稿功能','type'=>'checkbox','description'=>'是否开启小程序文章投稿'],
 					'encomments'=>['title'=>'小程序评论功能','type'=>'checkbox','description'=>'是否开启小程序评论功能'],
 					'approved'=>['title'=>'小程序评论审核','type'=>'checkbox','description'=>'是否开启小程序评论审核'],
 					'user_users'=>['title'=>'小程序用户列表','type'=>'checkbox','description'=>'是否禁用小程序用户列表'],

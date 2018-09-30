@@ -14,7 +14,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'get_wp_post_by_rand'    
   ));
 });
-function get_wp_post_by_rand(  ) {
+function get_wp_post_by_rand( ) {
 	$data=get_random_post_data($limit = 10); 
 	if ( empty( $data ) ) {
 		return new WP_Error( 'noposts', 'noposts', array( 'status' => 404 ) );
@@ -55,11 +55,7 @@ function get_random_post_data($limit = 10) {
 		$_data['comments']= $post_comment;
 		$_data['thumbses'] = $post_thumbs;
 		if (get_setting_option('post_meta')) {
-			if(wpjam_get_setting('wpjam-cdn','cdn_name')){
-				$_data["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
-			} else {
-				$_data["thumbnail"] = $post_thumbnail;
-			}
+			$_data["thumbnail"] = $post_thumbnail;
 			$_data["views"] = $post_views;
 		} else {
 			//--------------------自定义标签-----------------------------

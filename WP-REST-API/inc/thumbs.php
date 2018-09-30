@@ -135,25 +135,17 @@ function post_my_thumbs_up_data($openid) {
 	$_posts = $wpdb->get_results($sql);
     $posts = array();
     foreach ($_posts as $post) {
-        $post_id = $post->ID;
+		$post_id = $post->ID;
 		$post_thumbnail = get_post_thumbnail($post_id);
 		$post_views = (int)get_post_meta($post_id, 'views',true);
         $_data["id"] = $post_id;
         $_data["title"]["rendered"] = $post->post_title;
 		if (get_setting_option('post_meta')) {
-			if(wpjam_get_setting('wpjam-cdn','cdn_name')){
-				$_data["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
-			} else {
-				$_data["thumbnail"] = $post_thumbnail;
-			}
+			$_data["thumbnail"] = $post_thumbnail;
 			$_data["views"] = $post_views;
 		} else {
 			//--------------------自定义标签-----------------------------
-			if(wpjam_get_setting('wpjam-cdn','cdn_name')){
-				$_data["meta"]["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
-			} else {
-				$_data["meta"]["thumbnail"] = $post_thumbnail;
-			}
+			$_data["meta"]["thumbnail"] = $post_thumbnail;
 			$_data["meta"]["views"] = $post_views;
 			$meta = get_setting_option('meta_list');
 			if (!empty($meta)) {
@@ -217,11 +209,7 @@ function get_most_thumbsed_post_data($limit = 10) {
         $_data["date"] = $post_date; 
         $_data["link"] = $post_permalink;
 		if (get_setting_option('post_meta')) {
-			if(wpjam_get_setting('wpjam-cdn','cdn_name')){
-				$_data["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
-			} else {
-				$_data["thumbnail"] = $post_thumbnail;
-			}
+			$_data["thumbnail"] = $post_thumbnail;
 			$_data["views"] = $post_views;
 		} else {
 			//--------------------自定义标签-----------------------------

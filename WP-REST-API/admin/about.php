@@ -17,6 +17,7 @@ function wp_rest_api_about(){ ?>
 	<p>阅读统计 API：<?php echo site_url(); ?>/wp-json/wechat/v1/views/update/id (文章ID)</p>
 	<p>热门阅读 API：<?php echo site_url(); ?>/wp-json/wechat/v1/views/most</p>
 	<p>热门点赞 API：<?php echo site_url(); ?>/wp-json/wechat/v1/thumbs/most</p>
+	<p>开启投稿 API：<?php echo site_url(); ?>/wp-json/wechat/v1/creat/setting</p>
 	<h3>自定义文章类型</h3>
 	<p>文章列表 API：<?php echo site_url(); ?>/wp-json/wp/v2/xx (xx 表示 自定义文章类型别名)</p>
 	<p>分类列表 API：<?php echo site_url(); ?>/wp-json/wp/v2/xx (xx 表示 自定义文章类型分类别名)</p>

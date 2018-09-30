@@ -16,6 +16,7 @@ function post_custom_fields_rest($data, $post, $request) {
     $post_views = (int)get_post_meta($post_id, 'views',true);
 	$post_thumbnail = get_post_thumbnail($post_id);
 	$post_comment = wp_count_comments($post_id);
+	//$content = $post->post_content;
 	$category = get_the_category($post_id);
 	$categoryId=$category[0]->term_id;
 	$next_post = get_next_post($categoryId, '', 'category');
@@ -32,25 +33,17 @@ function post_custom_fields_rest($data, $post, $request) {
 			$avatarurls[] = $_avatarurl;       
 		}
 	} else {
-		if (get_setting_option('post_content')) {unset($_data['content'] ); }  	
+		if (get_setting_option('post_content')) { unset($_data['content'] ); }  	
 	}
+	//$_data['content']['rendered'] = $content;
 	$_data['category'] = $category[0]->cat_name;
 	$_data['comments'] = $post_comment->total_comments;
 	$_data['thumbses'] = $post_thumbs;
 	if (get_setting_option('post_meta')) {
-		if(wpjam_get_setting('wpjam-cdn','cdn_name')){
-			$_data["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
-		} else {
-			$_data["thumbnail"] = $post_thumbnail;
-		}
+		$_data["thumbnail"] = $post_thumbnail;
 		$_data["views"] = $post_views;
 	} else {
-		//--------------------自定义标签-----------------------------
-		if(wpjam_get_setting('wpjam-cdn','cdn_name')){
-			$_data["meta"]["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
-		} else {
-			$_data["meta"]["thumbnail"] = $post_thumbnail;
-		}
+		$_data["meta"]["thumbnail"] = $post_thumbnail;
 		$_data["meta"]["views"] = $post_views;
 		$meta = get_setting_option('meta_list');
 		if (!empty($meta)) {
@@ -87,4 +80,38 @@ function post_custom_fields_rest($data, $post, $request) {
     unset($_data['_links']['self']); 
     $data->data = $_data; 
     return $data; 
+}
+// 定义是否开启投稿入口
+add_action( 'rest_api_init', function () {
+  register_rest_route( 'wechat/v1', 'creat/setting', array(
+    'methods' => 'GET',
+    'callback' => 'get_add_post_entry'    
+  ));
+});
+function get_add_post_entry($data) {
+	$data=get_enablePost_data(); 
+	if (empty($data)) {
+		return new WP_Error( 'no options', 'no options', array( 'status' => 404 ) );
+	} 
+	// Create the response object
+	$response = new WP_REST_Response( $data ); 
+	// Add a custom status code
+	$response->set_status( 200 );
+	return $response;
+}
+function get_enablePost_data() {
+    $en_posts=get_setting_option('enposts');
+    if ($en_posts) {
+        $result["code"]="success";
+        $result["message"]="get enablePost success";
+        $result["status"]="200";
+        $result["enablePost"]="true";
+        return $result;
+    } else {
+        $result["code"]="success";
+        $result["message"]="get enablePost success";
+        $result["status"]="200";
+        $result["enablePost"]="false";
+        return $result;
+    }
 }
