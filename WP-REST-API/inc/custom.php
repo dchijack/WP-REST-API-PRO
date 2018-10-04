@@ -46,7 +46,7 @@ if (wp_get_option('custom_menu')) {
 	// 自定义文章类型固定链接
 	add_filter('post_type_link', function ( $link, $post = 0 ){
 		$singular = wp_get_option('custom_singular');
-		if ( $post->post_type == 'bbs' ){
+		if ( $post->post_type == $singular ){
 			return home_url( $singular.'/' . $post->ID .'.html' );
 		} else {
 			return $link;
