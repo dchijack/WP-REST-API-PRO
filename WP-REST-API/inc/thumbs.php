@@ -140,6 +140,8 @@ function post_my_thumbs_up_data($openid) {
 		$post_views = (int)get_post_meta($post_id, 'views',true);
         $_data["id"] = $post_id;
         $_data["title"]["rendered"] = $post->post_title;
+		$_data["content"]["rendered"] = $post->post_content;
+		if (get_setting_option('post_author')) {unset($_data['author']);} else {$_data['author'] = get_the_author_meta('display_name',$post->post_author);}
 		if (get_setting_option('post_meta')) {
 			$_data["thumbnail"] = $post_thumbnail;
 			$_data["views"] = $post_views;
@@ -186,7 +188,7 @@ function get_most_thumbsed_post_data($limit = 10) {
 	global $wpdb, $post;
     $today = date("Y-m-d H:i:s"); // 获取今天日期时间   
     $limit_date=date("Y-m-d H:i:s", strtotime("-1 year"));  
-	$sql=$wpdb->prepare("SELECT ".$wpdb->posts.".ID as ID, post_title, post_name, post_content, post_date, COUNT(".$wpdb->postmeta.".post_id) AS 'thumbs_total' FROM ".$wpdb->posts." LEFT JOIN ".$wpdb->postmeta." ON ".$wpdb->posts.".ID = ".$wpdb->postmeta.".post_id WHERE ".$wpdb->postmeta.".meta_value='thumbs' AND post_date BETWEEN '".$limit_date."'AND'".$today."'AND post_status ='publish' AND post_password ='' GROUP BY ".$wpdb->postmeta.".post_id ORDER BY thumbs_total DESC LIMIT %d",$limit);
+	$sql=$wpdb->prepare("SELECT ".$wpdb->posts.".ID as ID, post_title, post_name, post_excerpt, post_content, post_date, post_author, COUNT(".$wpdb->postmeta.".post_id) AS 'thumbs_total' FROM ".$wpdb->posts." LEFT JOIN ".$wpdb->postmeta." ON ".$wpdb->posts.".ID = ".$wpdb->postmeta.".post_id WHERE ".$wpdb->postmeta.".meta_value='thumbs' AND post_date BETWEEN '".$limit_date."'AND'".$today."'AND post_status ='publish' AND post_password ='' GROUP BY ".$wpdb->postmeta.".post_id ORDER BY thumbs_total DESC LIMIT %d",$limit);
     $mostthumbsed = $wpdb->get_results($sql);
     $posts =array();
     foreach ($mostthumbsed as $post) {
@@ -203,7 +205,9 @@ function get_most_thumbsed_post_data($limit = 10) {
 		$post_thumbnail = get_post_thumbnail($post_id);
 		$_data["id"] = $post_id;
         $_data["title"]["rendered"] = $post_title;
+		if (get_setting_option('post_author')) {unset($_data['author']);} else {$_data['author'] = get_the_author_meta('display_name',$post->post_author);}
 		if (!get_setting_option('post_excerpt')) { $_data["excerpt"]["rendered"] = $post_excerpt; }
+		$_data["content"]["rendered"] = $post->post_content;
         $_data["thumbses"] = $post_thumbs;
 		$_data['comments']= $post_comment;
         $_data["date"] = $post_date; 
