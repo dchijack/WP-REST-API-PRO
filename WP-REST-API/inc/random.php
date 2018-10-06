@@ -35,7 +35,6 @@ function get_random_post_data($limit = 10) {
     foreach ($randposts as $post) {
         $post_id = (int)$post->ID;
         $post_title = stripslashes($post->post_title);
-		$post_excerpt = $post->post_excerpt;
         $post_views = (int)get_post_meta( $post_id, 'views' ,true );
         $post_date = $post->post_date;
         $post_permalink = get_permalink($post->ID);
@@ -49,7 +48,8 @@ function get_random_post_data($limit = 10) {
 		$_data['category'] = $category[0]->cat_name;
         $_data["id"]  = $post_id;
 		$_data["title"]["rendered"] = $post_title;
-		if (!get_setting_option('post_excerpt')) { $_data["excerpt"]["rendered"] = $post_excerpt; }
+		if (!get_setting_option('post_excerpt')) { $_data["excerpt"]["rendered"] = $post->post_excerpt; }
+		if (get_setting_option('list_content')) { $_data["content"]["rendered"] = $post->post_content; }
 		$_data["date"] = $post_date;
 		$_data["link"] =$post_permalink;
 		$_data['comments']= $post_comment;

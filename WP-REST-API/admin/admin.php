@@ -64,6 +64,7 @@ add_filter('wpjam_settings',function($wpjam_settings){
 					'post_type'=>['title'=>'文章类型标签','type'=>'checkbox','description'=>'是否禁止文章输出 type 标签项目'],
 					'post_author'=>['title'=>'文章作者标签','type'=>'checkbox','description'=>'是否禁止文章输出 author 标签项目'],
 					'post_meta'=>['title'=>'文章自定义标签','type'=>'checkbox','description'=>'是否禁止文章输出 meta 标签项目'],
+					'list_content'=>['title'=>'列表内容选项','type'=>'checkbox','description'=>'是否开启热门、点赞、随机文章列表内容'],
 					'post_prev'=>['title'=>'文章上下篇','type'=>'checkbox','description'=>'是否开启文章输出上一篇及下一篇'],
 					'qvideo'=>['title'=>'解析腾讯视频','type'=>'checkbox','description'=>'视频格式文章,开启解析腾讯视频,仅支持一个视频'],
 					'deletehtml'=>['title'=>'清理HTML标签','type'=>'checkbox','description'=>'是否开启清理分类描述 HTML 标签'],

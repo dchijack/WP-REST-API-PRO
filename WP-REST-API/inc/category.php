@@ -12,10 +12,19 @@ add_filter( 'rest_prepare_category', 'rest_category_cover', 10, 3 ); // 获取�
 function rest_category_cover($data, $item, $request) {	  
     $category_cover_image = '';
     $temp = '';
+	$term_id = $item->term_id;
+	$args = array('category'=>$term_id,'numberposts' => 1);
+	$posts = get_posts($args);
+	if (!empty($posts)) {
+		$recent_date = $posts[0]->post_date;
+	} else {
+		$recent_date = '暂无更新';
+	}
     if($temp = get_term_meta($item->term_id,'cover',true)) {
         $category_cover_image = $temp; 
     }
-	$data->data['cover'] = $category_cover_image;    
+	$data->data['cover'] = $category_cover_image;
+	$data->data['date'] = $recent_date; 	
 	return $data;
 }
 /*********   给分类添加封面 *********/
