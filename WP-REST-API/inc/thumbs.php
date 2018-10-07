@@ -138,11 +138,23 @@ function post_my_thumbs_up_data($openid) {
 		$post_id = $post->ID;
 		$post_thumbnail = get_post_thumbnail($post_id);
 		$post_views = (int)get_post_meta($post_id, 'views',true);
+		$sql_comment = $wpdb->prepare("SELECT COUNT(1) FROM ".$wpdb->comments." where comment_approved = '1' and comment_post_ID = %d",$post_id);
+		$post_comment = $wpdb->get_var($sql_comment);
+		$sql_thumbs = $wpdb->prepare("SELECT COUNT(1) FROM ".$wpdb->postmeta." where meta_value='thumbs' and post_id=%d",$post_id);
+		$post_thumbs = $wpdb->get_var($sql_thumbs);	
         $_data["id"] = $post_id;
         $_data["title"]["rendered"] = $post->post_title;
 		if (get_setting_option('post_author')) {unset($_data['author']);} else {$_data['author'] = get_the_author_meta('display_name',$post->post_author);}
-		if (!get_setting_option('post_excerpt')) { $_data["excerpt"]["rendered"] = $post->post_excerpt; }
+		if (!get_setting_option('post_excerpt')) { 
+			if ($post->post_excerpt) {
+				$_data["excerpt"]["rendered"] = $post->post_excerpt;
+			} else {
+				$_data["excerpt"]["rendered"] = wp_trim_words( $post->post_content, 160, '...' );
+			}
+		}
 		if (get_setting_option('list_content')) { $_data["content"]["rendered"] = $post->post_content; }
+		$_data['comments']= $post_comment;
+		$_data['thumbses'] = $post_thumbs;
 		if (get_setting_option('post_meta')) {
 			$_data["thumbnail"] = $post_thumbnail;
 			$_data["views"] = $post_views;
@@ -206,7 +218,13 @@ function get_most_thumbsed_post_data($limit = 10) {
 		$_data["id"] = $post_id;
         $_data["title"]["rendered"] = $post_title;
 		if (get_setting_option('post_author')) {unset($_data['author']);} else {$_data['author'] = get_the_author_meta('display_name',$post->post_author);}
-		if (!get_setting_option('post_excerpt')) { $_data["excerpt"]["rendered"] = $post->post_excerpt; }
+		if (!get_setting_option('post_excerpt')) {
+			if ($post->post_excerpt) {
+				$_data["excerpt"]["rendered"] = $post->post_excerpt;
+			} else {
+				$_data["excerpt"]["rendered"] = wp_trim_words( $post->post_content, 160, '...' );
+			}
+		}
 		if (get_setting_option('list_content')) { $_data["content"]["rendered"] = $post->post_content; }
         $_data["thumbses"] = $post_thumbs;
 		$_data['comments']= $post_comment;

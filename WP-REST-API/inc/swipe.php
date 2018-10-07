@@ -42,7 +42,13 @@ function get_swipe_post_data(){
 			$post_comment = $wpdb->get_var($sql_comment);
 			$_data["id"]  = $post_id;
 			$_data["title"]["rendered"] = $post_title;
-			if (!get_setting_option('post_excerpt')) { $_data["excerpt"]["rendered"] = $post_excerpt; }
+			if (!get_setting_option('post_excerpt')) {
+				if ($post->post_excerpt) {
+					$_data["excerpt"]["rendered"] = $post->post_excerpt;
+				} else {
+					$_data["excerpt"]["rendered"] = wp_trim_words( $post->post_content, 160, '...' );
+				}
+			}
 			$_data["date"] = $post_date;
 			$_data["link"] =$post_permalink;
 			$_data['comments']= $post_comment;

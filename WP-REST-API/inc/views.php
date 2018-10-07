@@ -87,7 +87,13 @@ function get_most_views_post_data($limit = 10) {
         $_data["id"]  = $post_id;
 		$_data["title"]["rendered"] = $post_title;
 		if (get_setting_option('post_author')) {unset($_data['author']);} else {$_data['author'] = get_the_author_meta('display_name',$post->post_author);}
-		if (!get_setting_option('post_excerpt')) { $_data["excerpt"]["rendered"] = $post->post_excerpt; }
+		if (!get_setting_option('post_excerpt')) {
+			if ($post->post_excerpt) {
+				$_data["excerpt"]["rendered"] = $post->post_excerpt;
+			} else {
+				$_data["excerpt"]["rendered"] = wp_trim_words( $post->post_content, 160, '...' );
+			}
+		}
 		if (get_setting_option('list_content')) { $_data["content"]["rendered"] = $post->post_content; }
 		$_data["date"] = $post_date;
 		$_data["link"] =$post_permalink;

@@ -48,7 +48,13 @@ function get_random_post_data($limit = 10) {
 		$_data['category'] = $category[0]->cat_name;
         $_data["id"]  = $post_id;
 		$_data["title"]["rendered"] = $post_title;
-		if (!get_setting_option('post_excerpt')) { $_data["excerpt"]["rendered"] = $post->post_excerpt; }
+		if (!get_setting_option('post_excerpt')) {
+			if ($post->post_excerpt) {
+				$_data["excerpt"]["rendered"] = $post->post_excerpt;
+			} else {
+				$_data["excerpt"]["rendered"] = wp_trim_words( $post->post_content, 160, '...' );
+			}
+		}
 		if (get_setting_option('list_content')) { $_data["content"]["rendered"] = $post->post_content; }
 		$_data["date"] = $post_date;
 		$_data["link"] =$post_permalink;
