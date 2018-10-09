@@ -92,7 +92,7 @@ function get_most_comments_post_data($limit = 10) {
 	global $wpdb, $post;
     $today = date("Y-m-d H:i:s"); // 获取当天日期时间   
     $limit_date = date("Y-m-d H:i:s", strtotime("-1 year")); // 获取指定日期时间
-	$sql=$wpdb->prepare("SELECT ".$wpdb->posts.".ID as ID, post_title, post_name,post_content,post_date, COUNT(".$wpdb->comments.".comment_post_ID) AS 'comment_total' FROM ".$wpdb->posts." LEFT JOIN ".$wpdb->comments." ON ".$wpdb->posts.".ID = ".$wpdb->comments.".comment_post_ID WHERE comment_approved = '1' AND post_date BETWEEN '".$limit_date."' AND '".$today."' AND post_status = 'publish' AND post_password = '' GROUP BY ".$wpdb->comments.".comment_post_ID ORDER BY comment_total DESC LIMIT %d",$limit);
+	$sql=$wpdb->prepare("SELECT ".$wpdb->posts.".ID as ID, post_title,post_name,post_date,post_excerpt,post_content, COUNT(".$wpdb->comments.".comment_post_ID) AS 'comment_total' FROM ".$wpdb->posts." LEFT JOIN ".$wpdb->comments." ON ".$wpdb->posts.".ID = ".$wpdb->comments.".comment_post_ID WHERE comment_approved = '1' AND post_date BETWEEN '".$limit_date."' AND '".$today."' AND post_status = 'publish' AND post_password = '' GROUP BY ".$wpdb->comments.".comment_post_ID ORDER BY comment_total DESC LIMIT %d",$limit);
 	$mostcommenteds = $wpdb->get_results($sql);
     $posts =array();
     foreach ($mostcommenteds as $post) {
@@ -160,7 +160,7 @@ function getNewCommentsPosts( ) {
 // 获取近期评论文章
 function get_new_comments_post_data($limit = 10) {
     global $wpdb, $post;
-    $sql = $wpdb->prepare("SELECT ".$wpdb->posts.".ID as ID, post_title, post_name, post_excerpt, post_content, post_date, COUNT(".$wpdb->comments.".comment_post_ID) AS 'comment_total' FROM ".$wpdb->posts." LEFT JOIN ".$wpdb->comments." ON ".$wpdb->posts.".ID = ".$wpdb->comments.".comment_post_ID WHERE comment_approved = '1' AND post_date < '".date("Y-m-d H:i:s", (time() + ($time_difference * 3600)))."'AND post_status = 'publish' AND post_password = '' GROUP BY ".$wpdb->comments.".comment_post_ID ORDER BY comment_date DESC LIMIT %d",$limit);
+    $sql = $wpdb->prepare("SELECT ".$wpdb->posts.".ID as ID, post_title, post_name, post_date, post_excerpt, post_content, COUNT(".$wpdb->comments.".comment_post_ID) AS 'comment_total' FROM ".$wpdb->posts." LEFT JOIN ".$wpdb->comments." ON ".$wpdb->posts.".ID = ".$wpdb->comments.".comment_post_ID WHERE comment_approved = '1' AND post_date < '".date("Y-m-d H:i:s", (time() + ($time_difference * 3600)))."'AND post_status = 'publish' AND post_password = '' GROUP BY ".$wpdb->comments.".comment_post_ID ORDER BY comment_date DESC LIMIT %d",$limit);
 	$recentcomments = $wpdb->get_results($sql);
     $posts =array();  
     foreach ($recentcomments as $post) {
