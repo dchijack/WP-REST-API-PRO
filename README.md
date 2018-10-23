@@ -4,6 +4,8 @@
 
 技术支持：https://www.imahui.com
 
+> 开源插件的功能升级暂停了，除了修复 Bug 之外，暂且不打算增加新的功能拓展，目前正在准备着全新的 API 插件，计划放弃 WordPress REST API ，定制 API 更丰富好用。-- By 艾码汇@Chi 2018.10.23
+
 ## 使用方法
 
 1、安装 WPJAM BASIC 插件并激活启用
@@ -35,6 +37,10 @@
 ![API说明](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-about.png)
 
 ## 更新日志
+
+2018.10.23
+
+> 更新修复热门文章 API Bug ；新增用户资料增加项；
 
 2018.10.7
 

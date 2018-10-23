@@ -77,7 +77,7 @@ add_action( 'rest_api_init', function () {
 	));
 });
 function getMostCommentsPosts( ) {
-	$data = get_most_comments_post_data(10); 
+	$data = get_most_comments_post_by_comment($limit = 10); 
 	if (empty($data)) {
 		return new WP_Error( 'noposts', 'noposts', array( 'status' => 404 ) );
 	} 
@@ -88,54 +88,87 @@ function getMostCommentsPosts( ) {
 	return $response;
 }
 // 获取年度评论最多的文章
-function get_most_comments_post_data($limit = 10) {
-	global $wpdb, $post;
-    $today = date("Y-m-d H:i:s"); // 获取当天日期时间   
-    $limit_date = date("Y-m-d H:i:s", strtotime("-1 year")); // 获取指定日期时间
-	$sql=$wpdb->prepare("SELECT ".$wpdb->posts.".ID as ID, post_title,post_name,post_date,post_excerpt,post_content, COUNT(".$wpdb->comments.".comment_post_ID) AS 'comment_total' FROM ".$wpdb->posts." LEFT JOIN ".$wpdb->comments." ON ".$wpdb->posts.".ID = ".$wpdb->comments.".comment_post_ID WHERE comment_approved = '1' AND post_date BETWEEN '".$limit_date."' AND '".$today."' AND post_status = 'publish' AND post_password = '' GROUP BY ".$wpdb->comments.".comment_post_ID ORDER BY comment_total DESC LIMIT %d",$limit);
-	$mostcommenteds = $wpdb->get_results($sql);
-    $posts =array();
-    foreach ($mostcommenteds as $post) {
-		$post_id = (int)$post->ID;
-		$post_title = stripslashes($post->post_title);
-		$post_views = (int)get_post_meta($post_id, 'views',true);
-        $post_date = $post->post_date;
-		$post_comment = (int)$post->comment_total;
-		$post_permalink = get_permalink($post->ID);
-		$post_thumbnail = get_post_thumbnail($post_id);
-		$sql_thumbs = $wpdb->prepare("SELECT COUNT(1) FROM ".$wpdb->postmeta." where meta_value='thumbs' and post_id=%d",$post_id);
-		$post_thumbs = $wpdb->get_var($sql_thumbs);
-        $_data["id"]  = $post_id;
-		$_data["title"]["rendered"] = $post_title;
-		if (!get_setting_option('post_excerpt')) {
-			if ($post->post_excerpt) {
-				$_data["excerpt"]["rendered"] = $post->post_excerpt;
+function get_most_comments_post_by_comment($limit = 10) {
+	global $wpdb;
+	$args = array(
+		'post_type' => 'post',
+		'orderby' => 'comment_count', 
+		'posts_per_page' => $limit, 
+		'date_query' => array(
+			array(
+				'year' 		  => date( 'Y'),
+				'compare'   => '<=',
+			),
+			array(
+				'year'      	  => date( 'Y', strtotime("-1 year") ),
+				'compare'   => '>=',
+			),
+		), 
+	);
+	$queryPosts = new WP_Query( $args );
+	$posts = array();
+	if ( $queryPosts->have_posts() ) {
+		while ( $queryPosts->have_posts() ) {
+			$queryPosts->the_post();
+			$_data = array();
+			$post_id = get_the_ID();
+			$post_date = get_the_date();
+			$category = get_the_category();
+			$post_title = get_the_title();
+			$post_excerpt = get_the_excerpt();
+			$post_content = get_the_content();
+			$post_thumbnail = get_post_thumbnail($post_id);
+			$post_permalink = get_the_permalink($post_id);
+			$post_comment = get_comments_number($post_id);
+			$post_views = get_post_meta( $post_id, 'views' ,true );
+			$thumbs = "SELECT COUNT(1) FROM ".$wpdb->postmeta." where meta_value='thumbs' and post_id=".$post_id."";
+			$post_thumbs = $wpdb->get_var($thumbs);
+			$_data["id"]  = $post_id;
+			$_data["date"] = $post_date;
+			$_data["category"] = $category[0]->cat_name;
+			$_data["link"] =$post_permalink;
+			if (get_setting_option('post_author')) {
+				unset($_data['author']);
 			} else {
-				$_data["excerpt"]["rendered"] = wp_trim_words( $post->post_content, 160, '...' );
+				$_data['author'] = get_the_author_meta('display_name');
 			}
-		}
-		if (get_setting_option('list_content')) { $_data["content"]["rendered"] = $post->post_content; }
-		$_data["date"] = $post_date;
-		$_data["link"] = $post_permalink;
-		$_data['comments']= $post_comment;
-		$_data['thumbses'] = $post_thumbs;
-		if (get_setting_option('post_meta')) {
-			$_data["thumbnail"] = $post_thumbnail;
-			$_data["views"] = $post_views;
-		} else {
-			//--------------------自定义标签-----------------------------
-			$_data["meta"]["thumbnail"] = $post_thumbnail;
-			$_data["meta"]["views"] = $post_views;
-			$meta = get_setting_option('meta_list');
-			if (!empty($meta)) {
-				foreach ($meta as $meta=>$key) {
-					$_data["meta"][$key] = get_post_meta( $post_id, $key ,true );
+			$_data["title"]["rendered"]  = $post_title;
+			if (!get_setting_option('post_excerpt')) {
+				if ($post_excerpt) {
+					$_data["excerpt"]["rendered"] = $post_excerpt;
+				} else {
+					$_data["excerpt"]["rendered"] = wp_trim_words( $post_content, 160, '...' );
 				}
 			}
-			//-----------------------------------------------------------
+			if (get_setting_option('list_content')) { $_data["content"]["rendered"] = $post_content; }
+			$_data["comments"]= $post_comment;
+			$_data["thumbses"] = $post_thumbs;
+			if (get_setting_option('post_meta')) {
+				$_data["thumbnail"] = $post_thumbnail;
+				$_data["views"] = $post_views;
+			} else {
+				//--------------------自定义标签-----------------------------
+				if(wpjam_get_setting('wpjam-cdn','cdn_name')){
+					$_data["meta"]["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
+				} else {
+					$_data["meta"]["thumbnail"] = $post_thumbnail;
+				}
+				$_data["meta"]["views"] = $post_views;
+				$meta = get_setting_option('meta_list');
+				if (!empty($meta)) {
+					foreach ($meta as $meta=>$key) {
+						$_data["meta"][$key] = get_post_meta( $post_id, $key ,true );
+					}
+				}
+				//-----------------------------------------------------------
+			}
+			$posts[] = $_data;
 		}
-        $posts[] = $_data;   
-    } 
+		/* Restore original Post Data */
+		wp_reset_postdata();
+	} else {
+		// no posts found
+	}
 	return $posts;
 }
 // 定义最新评论文章 API
@@ -146,7 +179,7 @@ add_action( 'rest_api_init', function () {
 	));
 });
 function getNewCommentsPosts( ) {
-	$data = get_new_comments_post_data(10); 
+	$data = get_new_comments_post_by_recent($limit = 10); 
 	if (empty( $data )) {
 		return new WP_Error( 'noposts', 'noposts', array( 'status' => 404 ) );
 	}  
@@ -158,53 +191,85 @@ function getNewCommentsPosts( ) {
 	return $response;
 }
 // 获取近期评论文章
-function get_new_comments_post_data($limit = 10) {
-    global $wpdb, $post;
-    $sql = $wpdb->prepare("SELECT ".$wpdb->posts.".ID as ID, post_title, post_name, post_date, post_excerpt, post_content, COUNT(".$wpdb->comments.".comment_post_ID) AS 'comment_total' FROM ".$wpdb->posts." LEFT JOIN ".$wpdb->comments." ON ".$wpdb->posts.".ID = ".$wpdb->comments.".comment_post_ID WHERE comment_approved = '1' AND post_date < '".date("Y-m-d H:i:s", (time() + ($time_difference * 3600)))."'AND post_status = 'publish' AND post_password = '' GROUP BY ".$wpdb->comments.".comment_post_ID ORDER BY comment_date DESC LIMIT %d",$limit);
-	$recentcomments = $wpdb->get_results($sql);
-    $posts =array();  
-    foreach ($recentcomments as $post) {
-		$post_id = (int) $post->ID;
-		$post_title = stripslashes($post->post_title);
-		$post_views = (int)get_post_meta($post_id, 'views',true);
-        $post_date = $post->post_date;
-        $post_comment = (int)$post->comment_total;
-        $post_permalink = get_permalink($post->ID);
-		$post_thumbnail = get_post_thumbnail($post_id);
-		$sql_thumbs = $wpdb->prepare("SELECT COUNT(1) FROM ".$wpdb->postmeta." where meta_value='thumbs' and post_id=%d",$post_id);
-		$post_thumbs = $wpdb->get_var($sql_thumbs);	
-		$_data["id"]  = $post_id;
-		$_data["title"]["rendered"] = $post_title;
-		if (!get_setting_option('post_excerpt')) {
-			if ($post->post_excerpt) {
-				$_data["excerpt"]["rendered"] = $post->post_excerpt;
+function get_new_comments_post_by_recent($limit = 10) {
+    global $wpdb;
+	$args = array(
+		'post_type' => 'post',
+		'order' => 'DESC',
+		'orderby' => 'comment_count date',
+		'posts_per_page' => $limit, 
+		'date_query' => array(
+			array(
+				'year' 		  => date( 'Y'),
+				'week' 		  => date( 'W' ),
+			),
+		), 
+	);
+	$queryPosts = new WP_Query( $args );
+	$posts = array();
+	if ( $queryPosts->have_posts() ) {
+		while ( $queryPosts->have_posts() ) {
+			$queryPosts->the_post();
+			$_data = array();
+			$post_id = get_the_ID();
+			$post_date = get_the_date();
+			$category = get_the_category();
+			$post_title = get_the_title();
+			$post_excerpt = get_the_excerpt();
+			$post_content = get_the_content();
+			$post_thumbnail = get_post_thumbnail($post_id);
+			$post_permalink = get_the_permalink($post_id);
+			$post_comment = get_comments_number($post_id);
+			$post_views = get_post_meta( $post_id, 'views' ,true );
+			$thumbs = "SELECT COUNT(1) FROM ".$wpdb->postmeta." where meta_value='thumbs' and post_id=".$post_id."";
+			$post_thumbs = $wpdb->get_var($thumbs);
+			$_data["id"]  = $post_id;
+			$_data["date"] = $post_date;
+			$_data["category"] = $category[0]->cat_name;
+			$_data["link"] =$post_permalink;
+			if (get_setting_option('post_author')) {
+				unset($_data['author']);
 			} else {
-				$_data["excerpt"]["rendered"] = wp_trim_words( $post->post_content, 160, '...' );
+				$_data['author'] = get_the_author_meta('display_name');
 			}
-		}
-		if (get_setting_option('list_content')) { $_data["content"]["rendered"] = $post->post_content; }
-		$_data["date"] = $post_date;
-		$_data["link"] =$post_permalink;
-		$_data['comments']= $post_comment;
-		$_data['thumbses'] = $post_thumbs;
-		if (get_setting_option('post_meta')) {
-			$_data["thumbnail"] = $post_thumbnail;
-			$_data["views"] = $post_views;
-		} else {
-			//--------------------自定义标签-----------------------------
-			$_data["meta"]["thumbnail"] = $post_thumbnail;
-			$_data["meta"]["views"] = $post_views;
-			$meta = get_setting_option('meta_list');
-			if (!empty($meta)) {
-				foreach ($meta as $meta=>$key) {
-					$_data["meta"][$key] = get_post_meta( $post_id, $key ,true );
+			$_data["title"]["rendered"]  = $post_title;
+			if (!get_setting_option('post_excerpt')) {
+				if ($post_excerpt) {
+					$_data["excerpt"]["rendered"] = $post_excerpt;
+				} else {
+					$_data["excerpt"]["rendered"] = wp_trim_words( $post_content, 160, '...' );
 				}
 			}
-			//-----------------------------------------------------------
+			if (get_setting_option('list_content')) { $_data["content"]["rendered"] = $post_content; }
+			$_data["comments"]= $post_comment;
+			$_data["thumbses"] = $post_thumbs;
+			if (get_setting_option('post_meta')) {
+				$_data["thumbnail"] = $post_thumbnail;
+				$_data["views"] = $post_views;
+			} else {
+				//--------------------自定义标签-----------------------------
+				if(wpjam_get_setting('wpjam-cdn','cdn_name')){
+					$_data["meta"]["thumbnail"] = wpjam_get_thumbnail($post_thumbnail,array(600,300),1);
+				} else {
+					$_data["meta"]["thumbnail"] = $post_thumbnail;
+				}
+				$_data["meta"]["views"] = $post_views;
+				$meta = get_setting_option('meta_list');
+				if (!empty($meta)) {
+					foreach ($meta as $meta=>$key) {
+						$_data["meta"][$key] = get_post_meta( $post_id, $key ,true );
+					}
+				}
+				//-----------------------------------------------------------
+			}
+			$posts[] = $_data;
 		}
-        $posts[] = $_data;             
-    }
-	return $posts;    
+		/* Restore original Post Data */
+		wp_reset_postdata();
+	} else {
+		// no posts found
+	}
+	return $posts;
 }
 // 获取评论及回复 API
 add_action( 'rest_api_init', function () {

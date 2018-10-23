@@ -32,6 +32,7 @@ function post_custom_fields_rest($data, $post, $request) {
 			$_avatarurl['avatar'] = get_user_meta( $userid->userID, 'wxavatar', true);
 			$avatarurls[] = $_avatarurl;       
 		}
+		$_data['avatar']= $avatarurls;
 	} else {
 		if (get_setting_option('post_content')) { unset($_data['content'] ); }  	
 	}
@@ -53,7 +54,6 @@ function post_custom_fields_rest($data, $post, $request) {
 		}
 		//-----------------------------------------------------------
 	}
-    $_data['avatar']= $avatarurls;
 	if (get_setting_option('post_prev')) {
 		$_data['next_id'] = !empty($next_post->ID)?$next_post->ID:null;
 		$_data['next_title'] = !empty($next_post->post_title)?$next_post->post_title:null;

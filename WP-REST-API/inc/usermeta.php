@@ -11,6 +11,14 @@
 function add_wechat_user_avatar( $user_contact ) {
 	$user_contact['wxavatar'] = __( '微信头像' );
 	$user_contact['openid'] = __( 'OpenId' );
+	$user_meta = get_setting_option('use_meta');
+	if (!empty($user_meta)) {
+		foreach ($user_meta as $meta) {
+			$key = $meta['meta_key'];
+			$name = $meta['meta_value'];
+			$user_contact[$key] = __( $name );
+		}
+	}
 	return $user_contact;
 }
 add_filter( 'user_contactmethods', 'add_wechat_user_avatar' );
