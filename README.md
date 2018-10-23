@@ -32,6 +32,8 @@
 
 ![辅助选项](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-plugin.png)
 
+![文章类型](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-custom.png)
+
 ![广告功能](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-adsense.png)
 
 ![API说明](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-about.png)
