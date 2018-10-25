@@ -49,7 +49,7 @@ add_filter('wpjam_settings',function($wpjam_settings){
 					'prefix'=>['title'=>'默认缩略图','type'=>'image','item_type'=>'url'],
 					'use_role'=>['title'=>'微信授权用户组','type'=>'select','options'=>['subscriber'=>'订阅组','contributor'=>'投稿组','WxAuthor'=>'微作者','author'=>'作者组','editor'=>'编辑组']],
 					'use_meta'=>['title'=>'定义用户字段','type'=>'mu-fields','fields'=>[
-						'meta_key'	=> ['title'=>'字段键名', 'type'=>'text', 'description'=>'自定义用户资料字段键名(英文或拼音)'],
+						'meta_key'	=> ['title'=>'', 'type'=>'text', 'description'=>'自定义用户资料字段键名(英文或拼音)'],
 						'meta_value'	=> ['title'=>'', 'type'=>'text', 'description'=>'自定义用户资料字段标签名称(中文名称)'],
 						]
 					],
