@@ -55,7 +55,7 @@ function post_user_openid_data($js_code,$encryptedData,$iv,$avatarUrl,$nickname)
 				$passwd = base64_encode($openid);
                 $sessionKey = $access_array['session_key'];                    
                 $pc = new WXBizDataCrypt($appid, $sessionKey);
-                $errCode = $pc->decryptData($encryptedData, $iv, $data );                   
+                $errCode = $pc->decryptData($encryptedData, $iv );                   
                 if ($errCode == 0) {
                     if(!username_exists($openid)) {
                         $data =json_decode($data,true);  
@@ -152,7 +152,7 @@ class WXBizDataCrypt {
      *
      * @return int 成功 0，失败返回对应的错误码
       */
-    public function decryptData( $encryptedData, $iv, &$data ) {
+    public function decryptData( $encryptedData, $iv ) {
         if (strlen($this->sessionKey) != 24) {
             return ErrorCode::$IllegalAesKey;
         }
@@ -170,7 +170,6 @@ class WXBizDataCrypt {
         if( $dataObj->watermark->appid != $this->appid ) {
             return ErrorCode::$IllegalBuffer;
         }
-        $data = $result;
         return ErrorCode::$OK;
     }
 }
