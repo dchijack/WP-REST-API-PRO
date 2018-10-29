@@ -47,25 +47,26 @@ function rest_comments_custom_fields( $data, $comment, $request) {
     global $wpdb;
     $_data=$data->data;  
     $comment_id=$comment->comment_ID;
-    $sql=$wpdb->prepare("SELECT t2.comment_author as parent_name,t2.comment_date as parent_date ,t1.user_id as user_id,(SELECT t3.meta_value from ".$wpdb->commentmeta." t3 where t1.comment_ID = t3.comment_id AND t3.meta_key = 'formId')  AS formId  from ".$wpdb->comments." t1 LEFT JOIN ".$wpdb->comments." t2 on t1.comment_parent=t2.comment_ID WHERE t1.comment_ID=%d",$comment_id);
-	$comment=$wpdb->get_row($sql);
-    $userid=$comment->user_id;
-    $parent_name=$comment->parent_name;
-    $parent_date=$comment->parent_date;
-    $formId=$comment->formId;
-    if(empty($formId)) {
-        $formId="";
-    }
-    if(empty($parent_name)) {
-        $parent_name="";
-    }
-    if(empty($parent_date)) {
-        $parent_date="";
-    }
-    $_data['parent_name']=$parent_name; 
-    $_data['parent_date']=$parent_date;  
-    $_data['userid']=$userid;
-    $_data['formId']=$formId;
+    $comments=get_comments( array('ID' =>$comment_id) );
+	foreach($comments as $comment) {
+		$userid=$comment->user_id;
+		$parent_name=$comment->parent_name;
+		$parent_date=$comment->parent_date;
+		$formId=$comment->formId;
+		if(empty($formId)) {
+			$formId="";
+		}
+		if(empty($parent_name)) {
+			$parent_name="";
+		}
+		if(empty($parent_date)) {
+			$parent_date="";
+		}
+		$_data['parent_name']=$parent_name; 
+		$_data['parent_date']=$parent_date;  
+		$_data['userid']=$userid;
+		$_data['formId']=$formId;
+	}
     $data->data = $_data;
     return $data; 
 }
@@ -412,11 +413,8 @@ function add_comment_data($post,$author_name,$author_email,$author_url,$content,
     $user_id =0;
     $useropenid="";
 	$approved = get_setting_option('approved');
-	$sql = $wpdb->prepare("SELECT ID FROM ".$wpdb->users." WHERE user_login='%s'",$openid);
-    $users = $wpdb->get_results($sql);
-    foreach ($users as $user) {
-        $user_id = (int)$user->ID;  
-    }
+	$users = get_user_by('login',$openid);
+	$user_id = (int)$users->ID;
     $commentdata = array(
         'comment_post_ID' => $post, // to which post the comment will show up
         'comment_author' => $author_name, //fixed value - can be dynamic 
@@ -486,11 +484,8 @@ function getcomment($request) {
 function get_comment_data($openid){
 	global $wpdb;
     $user_id = 0;
-	$sql = $wpdb->prepare("SELECT ID FROM ".$wpdb->users ." WHERE user_login='%s'",$openid);
-    $users = $wpdb->get_results($sql);
-    foreach ($users as $user) {
-        $user_id = (int)$user->ID;
-    }
+	$users = get_user_by('login',$openid);
+	$user_id = (int)$users->ID;
     if($user_id==0) {
         $result["code"]="success";
         $result["message"]= "user_id is empty";
@@ -504,8 +499,7 @@ function get_comment_data($openid){
             $post_id = $post->ID;
 			$post_thumbnail = get_post_thumbnail($post_id);
 			$post_views = (int)get_post_meta($post_id, 'views',true);
-			$sql_comment = $wpdb->prepare("SELECT COUNT(1) FROM ".$wpdb->comments." where comment_approved = '1' and comment_post_ID = %d",$post_id);
-			$post_comment = $wpdb->get_var($sql_comment);
+			$post_comment = get_comments_number($post_id);
 			$sql_thumbs = $wpdb->prepare("SELECT COUNT(1) FROM ".$wpdb->postmeta." where meta_value='thumbs' and post_id=%d",$post_id);
 			$post_thumbs = $wpdb->get_var($sql_thumbs);	
             $_data["id"]  = $post_id;

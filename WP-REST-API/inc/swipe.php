@@ -38,8 +38,7 @@ function get_swipe_post_data(){
 			$post_thumbnail = get_post_thumbnail($post_id);
 			$sql_thumbs = $wpdb->prepare("SELECT COUNT(1) FROM ".$wpdb->postmeta." where meta_value='thumbs' and post_id=%d",$post_id);
 			$post_thumbs = $wpdb->get_var($sql_thumbs);
-			$sql_comment = $wpdb->prepare("SELECT COUNT(1) FROM ".$wpdb->comments." where comment_approved = '1' and comment_post_ID = %d",$post_id);
-			$post_comment = $wpdb->get_var($sql_comment);
+			$post_comment = get_comments_number($post_id);;
 			$_data["id"]  = $post_id;
 			$_data["title"]["rendered"] = $post_title;
 			if (!get_setting_option('post_excerpt')) {

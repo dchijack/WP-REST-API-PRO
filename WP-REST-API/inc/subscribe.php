@@ -25,11 +25,8 @@ function SubscriptionCate($request) {
             return new WP_Error( 'error', 'Not allowed to submit', array( 'status' => 500 ) );
         } else {
             $user_id =0;
-            $sql = $wpdb->prepare("SELECT ID FROM ".$wpdb->users ." WHERE user_login=%s",$openid);
-            $users = $wpdb->get_results($sql);
-            foreach ($users as $user) {
-                $user_id = (int)$user->ID;
-            }
+            $users = get_user_by('login',$openid);
+			$user_id = (int)$users->ID;
             if($user_id !=0) {
                 $data = post_subscription_data($user_id,$categoryid); 
                 if (empty($data)) {
@@ -92,11 +89,8 @@ function getSubscription($request) {
             return new WP_Error( 'error', 'Not allowed to submit', array( 'status' => 500 ) );
         } else {
             $user_id =0;
-            $sql = $wpdb->prepare("SELECT ID FROM ".$wpdb->users ." WHERE user_login=%s",$openid);
-            $users = $wpdb->get_results($sql);
-            foreach ($users as $user) {
-                $user_id = (int)$user->ID;
-            }
+            $users = get_user_by('login',$openid);
+			$user_id = (int)$users->ID;
             if($user_id !=0) {
                 $data=get_subscription_data($user_id); 
                 if (empty($data)) {

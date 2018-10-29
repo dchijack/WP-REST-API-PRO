@@ -138,8 +138,7 @@ function post_my_thumbs_up_data($openid) {
 		$post_id = $post->ID;
 		$post_thumbnail = get_post_thumbnail($post_id);
 		$post_views = (int)get_post_meta($post_id, 'views',true);
-		$sql_comment = $wpdb->prepare("SELECT COUNT(1) FROM ".$wpdb->comments." where comment_approved = '1' and comment_post_ID = %d",$post_id);
-		$post_comment = $wpdb->get_var($sql_comment);
+		$post_comment = get_comments_number($post_id);
 		$sql_thumbs = $wpdb->prepare("SELECT COUNT(1) FROM ".$wpdb->postmeta." where meta_value='thumbs' and post_id=%d",$post_id);
 		$post_thumbs = $wpdb->get_var($sql_thumbs);	
         $_data["id"] = $post_id;
@@ -210,8 +209,7 @@ function get_most_thumbsed_post_data($limit = 10) {
         $post_views = (int)get_post_meta($post_id, 'views',true);
 		$sql_thumbs = $wpdb->prepare("SELECT COUNT(1) FROM ".$wpdb->postmeta." where meta_value='thumbs' and post_id=%d",$post_id);
 		$post_thumbs = $wpdb->get_var($sql_thumbs);
-		$sql_comment = $wpdb->prepare("SELECT COUNT(1) FROM ".$wpdb->comments." where comment_approved = '1' and comment_post_ID = %d",$post_id);
-		$post_comment = $wpdb->get_var($sql_comment);
+		$post_comment = get_comments_number($post_id);
 		$post_date = $post->post_date;
         $post_permalink = get_permalink($post->ID);
 		$post_thumbnail = get_post_thumbnail($post_id);
