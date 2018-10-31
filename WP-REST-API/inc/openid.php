@@ -58,7 +58,7 @@ function post_user_openid_data($js_code,$encryptedData,$iv,$avatarUrl,$nickname)
                 $errCode = $pc->decryptData($encryptedData, $iv );                   
                 if ($errCode == 0) {
                     if(!username_exists($openid)) {
-                        $data =json_decode($data,true);  
+                        //$data = json_decode($data,true);  
                         $userdata = array(
                             'user_login' => $openid,
                             'nickname' => $nickname,
@@ -84,11 +84,27 @@ function post_user_openid_data($js_code,$encryptedData,$iv,$avatarUrl,$nickname)
                             return $result;
                         }
                     } else {
-                        $result["code"]="success";
-                        $result["message"]="get openid success";
-                        $result["status"]="200";
-                        $result["openid"]=$openid;
-                        return $result;
+                        $user = get_user_by( 'login', $openid);
+						$userdata =array(
+							'ID'            => $user->ID,
+							'first_name'	=> $nickname,
+							'nickname'      => $nickname,
+							'user_nicename' => $nickname,
+							'display_name'  => $nickname
+						);
+						$userId = wp_update_user($userdata);
+						if(is_wp_error($userId)){
+							$result["code"] = "success";
+							$result["message"] = "update user data error";
+							$result["status"] = 500;                   
+							return $result;
+						} else {
+							$result["code"] = "success";
+							$result["message"] = "get openid success";
+							$result["status"] = 200;
+							$result["openid"] = $openid;
+							return $result;
+						}
                     }
                 } else {
                     $result["code"]="success";
