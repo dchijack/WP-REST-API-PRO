@@ -44,11 +44,8 @@ function wp_rest_api_about(){ ?>
 	<h3>海报相关 API</h3>
 	<p>生成二维码 API：<?php echo site_url(); ?>/wp-json/wechat/v1/qrcode/creat</p>
 	<h3>广告相关 API</h3>
-	<p>开启首页广告：<?php echo site_url(); ?>/wp-json/wechat/v1/adenable/index</p>
 	<p>首页广告 API：<?php echo site_url(); ?>/wp-json/wechat/v1/adsense/index</p>
-	<p>开启列表页广告：<?php echo site_url(); ?>/wp-json/wechat/v1/adenable/list</p>
 	<p>列表页广告 API：<?php echo site_url(); ?>/wp-json/wechat/v1/adsense/list</p>
-	<p>开启详情页广告：<?php echo site_url(); ?>/wp-json/wechat/v1/adenable/detail</p>
 	<p>详情页广告 API：<?php echo site_url(); ?>/wp-json/wechat/v1/adsense/detail</p>
 	</div>
 <?php }

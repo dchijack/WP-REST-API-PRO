@@ -8,26 +8,55 @@
  * 
  */
 //解析腾讯视频，只支持一个腾讯视频
-function video_content_filter($content) {
-    preg_match('/https\:\/\/v.qq.com\/x\/(\S*)\/(\S*)\.html/',$content,$matches);
-    if($matches) {
-    	$vids=$matches[2];
-	    //  defaultfmt： 1080P-fhd，超清-shd，高清-hd，标清-sd
-	    $url='http://vv.video.qq.com/getinfo?vid='.$vids.'&defaultfmt=auto&otype=json&platform=11001&defn=fhd&charge=0';
-	    $res = file_get_contents($url);
-	    if($res) {
-	    	$str = substr($res,13,-1);
-		    $newStr =json_decode($str,true);	    
-		    $videoUrl= $newStr['vl']['vi'][0]['ul']['ui'][0]['url'].$newStr['vl']['vi'][0]['fn'].'?vkey='.$newStr['vl']['vi'][0]['fvkey']; 
-		    $contents = preg_replace('~<video (.*?)></video>~s','<video src="'.$videoUrl.'" controls="controls" width="100%"></video>',$content);
-		    return $contents;
-	    } else {
-	    	return $content;
-	    }  
+function get_tencent_video_filter($url_ID) {
+	if(filter_var($url_ID, FILTER_VALIDATE_URL)){ 
+		if(preg_match('#https://v.qq.com/x/page/(.*?).html#i',$url_ID, $matches)){
+			$vids = $matches[1];
+		}elseif(preg_match('#https://v.qq.com/x/cover/.*/(.*?).html#i',$url_ID, $matches)){
+			$vids = $matches[1];
+		}else{
+			$vids = $url_ID;
+		}
+	}else{
+		$vids = $url_ID;
+	}
+    if($vids) {
+		if(strlen($vids) > 20){
+			return $url_ID;
+		}
+		$url='http://vv.video.qq.com/getinfo?vid='.$vids.'&defaultfmt=auto&otype=json&platform=11001&defn=fhd&charge=0';
+		
+	    $response = file_get_contents($url);
+		$response = substr($response,13,-1);
+		$response = json_decode($response,true);
+
+		$res	= $response['vl']['vi'][0];
+		$p0		= $res['ul']['ui'][0]['url'];
+		$p1		= $res['fn'];
+		$p2		= $res['fvkey'];
+
+		$mp4	= $p0.$p1.'?vkey='.$p2;
+		
+	    return $mp4;
     } else {
-    	return $content;
-    }    
+    	return $url_ID;
+    } 
 }
-if (has_post_format( 'video' )) {
-	add_filter( 'the_content', 'video_content_filter' );
-}
+
+add_filter( 'the_content',function ($content) {
+	$post_id = get_the_ID();
+	$video_id = get_post_meta($post_id,'video',true);
+	$thumbnail = get_post_thumbnail($post_id);
+	$format = get_post_format($post_id);
+	if (!empty($video_id)) {
+		$video = get_tencent_video_filter(strip_tags(trim($video_id)));
+		$video_code = '<p><video controls poster="'.$thumbnail.'" src="'.$video.'">您的浏览器可能不支持视频标签,建议使用谷歌浏览器(Chrome)。</video></p>';
+		return $content.$video_code;
+	} elseif ($format == 'video' && empty($video_id)) {
+		$video = get_tencent_video_filter(strip_tags(trim($video_id)));
+		$content = '<video controls poster="'.$thumbnail.'" src="'.$video.'">您的浏览器可能不支持视频标签,建议使用谷歌浏览器(Chrome)。</video>';
+		return $content;
+	} else {
+		return $content;
+	}
+});

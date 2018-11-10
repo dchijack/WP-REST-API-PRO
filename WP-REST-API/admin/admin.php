@@ -90,23 +90,29 @@ add_filter('wpjam_settings',function($wpjam_settings){
 			],
 			'adsense-setting'=>[
 				'title'=>'广告功能',
-				'summary'=>'<p>微信小程序广告功能设置</p>',
+				'summary'=>'<p>微信小程序广告功能设置：类型为 微信广告组件 时,请填写组件 广告位 ID;类型为 微信小程序 时,请填写广告小程序 AppId ;类型为 活动广告 时,请填写活动电话号码;类型为 淘宝口令 时,请填写淘宝口令;</p>',
 				'fields'=> [
 					'index_adv'=>['title'=>'首页广告','type'=>'checkbox','description'=>'是否开启首页广告'],
-					'index_option'=>['title'=>'广告类型','type'=>'select','options'=>['wechat'=>'微信广告组件','minapp'=>'微信小程序','picture'=>'活动广告']],
-					'index_adpic'=>['title'=>'广告图片','type'=>'img','item_type'=>'url'],
-					'index_adpage'=>['title'=>'广告页面','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'类型为 微信广告组件 或 活动广告 时,请留空;类型为 微信小程序 时,请填写广告小程序页面路径;'],
-					'index_adnum'=>['title'=>'广告参数','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'类型为 微信广告组件 时,请填写组件ID;类型为 微信小程序 时,请填写广告小程序 AppId ;类型为 活动广告 时,请填写活动电话号码;'],
+					'index_option'=>['title'=>'广告类型','type'=>'select','options'=>['wechat'=>'微信广告组件','minapp'=>'微信小程序','picture'=>'活动广告','taobao'=>'淘宝口令']],
+					'index_adpic'=>['title'=>'广告图片','type'=>'mu-image','fields'=>[
+						'ad_picture'	=> ['title'=>'','type'=>'img','item_type'=>'url'],
+						]
+					],
+					'index_adnum'=>['title'=>'广告参数','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'填写对应的广告类型参数'],
 					'list_adv'=>['title'=>'列表广告','type'=>'checkbox','description'=>'是否开启列表页广告'],
-					'list_option'=>['title'=>'广告类型','type'=>'select','options'=>['wechat'=>'微信广告组件','minapp'=>'微信小程序','picture'=>'活动广告']],
-					'list_adpic'=>['title'=>'广告图片','type'=>'img','item_type'=>'url'],
-					'list_adpage'=>['title'=>'广告页面','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'类型为 微信广告组件 或 活动广告 时,请留空;类型为 微信小程序 时,请填写广告小程序页面路径;'],
-					'list_adnum'=>['title'=>'广告参数','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'类型为 微信广告组件 时,请填写组件ID;类型为 微信小程序 时,请填写广告小程序 AppId ;类型为 活动广告 时,请填写活动电话号码;'],
+					'list_option'=>['title'=>'广告类型','type'=>'select','options'=>['wechat'=>'微信广告组件','minapp'=>'微信小程序','picture'=>'活动广告','taobao'=>'淘宝口令']],
+					'list_adpic'=>['title'=>'广告图片','type'=>'mu-image','fields'=>[
+						'ad_picture'	=> ['title'=>'','type'=>'img','item_type'=>'url'],
+						]
+					],
+					'list_adnum'=>['title'=>'广告参数','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'填写对应的广告类型参数'],
 					'detail_adv'=>['title'=>'详情广告','type'=>'checkbox','description'=>'是否开启详情页广告'],
-					'detail_option'=>['title'=>'广告类型','type'=>'select','options'=>['wechat'=>'微信广告组件','minapp'=>'微信小程序','picture'=>'活动广告']],
-					'detail_adpic'=>['title'=>'广告图片','type'=>'img','item_type'=>'url'],
-					'detail_adpage'=>['title'=>'广告页面','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'类型为 微信广告组件 或 活动广告 时,请留空;类型为 微信小程序 时,请填写广告小程序页面路径;'],
-					'detail_adnum'=>['title'=>'广告参数','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'类型为 微信广告组件 时,请填写组件ID;类型为 微信小程序 时,请填写广告小程序 AppId ;类型为 活动广告 时,请填写活动电话号码;'],
+					'detail_option'=>['title'=>'广告类型','type'=>'select','options'=>['wechat'=>'微信广告组件','minapp'=>'微信小程序','picture'=>'活动广告','taobao'=>'淘宝口令']],
+					'detail_adpic'=>['title'=>'广告图片','type'=>'mu-image','fields'=>[
+						'ad_picture'	=> ['title'=>'','type'=>'img','item_type'=>'url'],
+						]
+					],
+					'detail_adnum'=>['title'=>'广告参数','type'=>'text','class'=>'regular-text','rows'=>4,'description'=>'填写对应的广告类型参数'],
 				],
 			],
 		],
