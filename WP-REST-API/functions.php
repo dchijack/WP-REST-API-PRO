@@ -14,7 +14,6 @@ include(WP_REST_API.'admin/admin.php');
 include(WP_REST_API.'admin/about.php');
 include(WP_REST_API.'inc/category.php');
 // WP REST API FUNCTIONS
-include(WP_REST_API.'inc/adsense.php');
 include(WP_REST_API.'inc/comments.php');
 include(WP_REST_API.'inc/message.php');
 include(WP_REST_API.'inc/openid.php');
@@ -27,7 +26,8 @@ include(WP_REST_API.'inc/thumbnail.php');
 include(WP_REST_API.'inc/thumbs.php');
 include(WP_REST_API.'inc/usermeta.php');
 include(WP_REST_API.'inc/views.php');
-include(WP_REST_API.'inc/custom.php');
+if (wp_get_option('custom_post')) { include(WP_REST_API.'inc/custom.php'); }
+if (wp_get_option('advert_set')) { include(WP_REST_API.'inc/adsense.php'); }
 // 腾讯视频解析
 if (wp_get_option('qvideo')) { 
 	include(WP_REST_API.'inc/video.php');
@@ -45,12 +45,12 @@ if (wp_get_option('formats')) {
 	add_theme_support( 'post-formats', $formats );
 }
 // 描述清理HTML标签
+function deletehtml($description) {
+	$description = trim($description);
+	$description = strip_tags($description,"");
+	return ($description);
+}
 if (wp_get_option('deletehtml')) {
-	function deletehtml($description) {
-		$description = trim($description);
-		$description = strip_tags($description,"");
-		return ($description);
-	}
 	add_filter('category_description', 'deletehtml');
 }
 // 图片上传重命名
@@ -62,6 +62,19 @@ if (wp_get_option('reupload')) {
 	}
 	add_filter('wp_handle_upload_prefilter', 'git_upload_filter');
 }
+add_filter('wpjam_post_post_options',function ($post_options){
+	$post_options['post-box'] = [
+		'title'		=> '文章设置',
+		'post_type'	=> 'post',
+		'priority'	=> 'high',
+		'fields'	=> [
+			'source'		=>['title'=>'出处/作者',	'type'=>'text',	'rows'=>4],
+			'video'			=>['title'=>'视频地址',	'type'=>'file',	'rows'=>4],
+			'audio'			=>['title'=>'音频地址',	'type'=>'file',	'rows'=>4],
+		]
+	];
+	return $post_options;
+});
 // 时间格式
 function time_tran($the_time) {
     $now_time = date("Y-m-d H:i:s",time()+8*60*60); 

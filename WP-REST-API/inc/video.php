@@ -46,16 +46,13 @@ function get_tencent_video_filter($url_ID) {
 add_filter( 'the_content',function ($content) {
 	$post_id = get_the_ID();
 	$video_id = get_post_meta($post_id,'video',true);
+	$audio_id = get_post_meta($post_id,'audio',true);
 	$thumbnail = get_post_thumbnail($post_id);
 	$format = get_post_format($post_id);
 	if (!empty($video_id)) {
 		$video = get_tencent_video_filter(strip_tags(trim($video_id)));
-		$video_code = '<p><video controls poster="'.$thumbnail.'" src="'.$video.'">您的浏览器可能不支持视频标签,建议使用谷歌浏览器(Chrome)。</video></p>';
+		$video_code = '<p><video poster="'.$thumbnail.'" src="'.$video.'"></video></p>';
 		return $content.$video_code;
-	} elseif ($format == 'video' && empty($video_id)) {
-		$video = get_tencent_video_filter(strip_tags(trim($video_id)));
-		$content = '<video controls poster="'.$thumbnail.'" src="'.$video.'">您的浏览器可能不支持视频标签,建议使用谷歌浏览器(Chrome)。</video>';
-		return $content;
 	} else {
 		return $content;
 	}

@@ -38,6 +38,10 @@
 
 ## 更新日志
 
+2018.11.12
+
+> 优化视频解析
+
 2018.11.10
 
 > 优化广告 API 及设置，增加 淘宝口令 类型. 升级插件之前，请注意小程序更新
@@ -103,3 +107,7 @@
 > 欢迎关注个人微信公众号，扫描下方二维码。后期关于插件，小程序等信息，将第一时间发布在公众号或个人博客：https://www.imahui.com
 
 ![微信公众号二维码](https://github.com/dchijack/WP-REST-API/blob/master/qrcode.jpg)
+
+## 赞赏捐赠
+
+![微信赞赏](https://www.imahui.com/uploads/praise/praise.jpg)
