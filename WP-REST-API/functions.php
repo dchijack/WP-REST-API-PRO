@@ -14,6 +14,7 @@ include(WP_REST_API.'admin/admin.php');
 include(WP_REST_API.'admin/about.php');
 include(WP_REST_API.'inc/category.php');
 // WP REST API FUNCTIONS
+include(WP_REST_API.'inc/adsense.php');
 include(WP_REST_API.'inc/comments.php');
 include(WP_REST_API.'inc/message.php');
 include(WP_REST_API.'inc/openid.php');
@@ -27,7 +28,6 @@ include(WP_REST_API.'inc/thumbs.php');
 include(WP_REST_API.'inc/usermeta.php');
 include(WP_REST_API.'inc/views.php');
 if (wp_get_option('custom_post')) { include(WP_REST_API.'inc/custom.php'); }
-if (wp_get_option('advert_set')) { include(WP_REST_API.'inc/adsense.php'); }
 // 腾讯视频解析
 if (wp_get_option('qvideo')) { 
 	include(WP_REST_API.'inc/video.php');
@@ -63,17 +63,36 @@ if (wp_get_option('reupload')) {
 	add_filter('wp_handle_upload_prefilter', 'git_upload_filter');
 }
 add_filter('wpjam_post_post_options',function ($post_options){
-	$post_options['post-box'] = [
-		'title'		=> '文章设置',
-		'post_type'	=> 'post',
-		'priority'	=> 'high',
-		'fields'	=> [
-			'source'		=>['title'=>'出处/作者',	'type'=>'text',	'rows'=>4],
-			'video'			=>['title'=>'视频地址',	'type'=>'file',	'rows'=>4],
-			'audio'			=>['title'=>'音频地址',	'type'=>'file',	'rows'=>4],
-		]
-	];
+	if (get_setting_option('media_on')) {
+		$post_options['post-box'] = [
+			'title'		=> '文章设置',
+			'post_type'	=> 'post',
+			'priority'	=> 'high',
+			'fields'	=> [
+				'source'		=>['title'=>'出处/作者',	'type'=>'text',	'rows'=>4,'description'=>'文章引用来源/出处,或填写文章作者'],
+				'thumbnail'		=>['title'=>'自定义缩略图',	'type'=>'image','rows'=>4,'description'=>'自定义缩略图地址.注意:设置后无须另行设置特色图像'],
+				'cover'			=>['title'=>'封面图像',		'type'=>'image','rows'=>4,'description'=>'视频/音频封面图像,不设置则采用文章缩略图'],
+				'author'		=>['title'=>'表演作者',		'type'=>'text','rows'=>4,'description'=>'视频/音频作者,比如主演,演唱者'],
+				'title'			=>['title'=>'作品名称',		'type'=>'text','rows'=>4,'description'=>'视频/音频的作品名称,比如歌曲名称'],
+				'video'			=>['title'=>'视频地址',		'type'=>'file',	'rows'=>4],
+				'audio'			=>['title'=>'音频地址',		'type'=>'file',	'rows'=>4],
+			]
+		];
+	} else {
+		$post_options['post-box'] = [
+			'title'		=> '文章设置',
+			'post_type'	=> 'post',
+			'priority'	=> 'high',
+			'fields'	=> [
+				'source'		=>['title'=>'出处/作者',	'type'=>'text',	'rows'=>4,'description'=>'文章引用来源/出处,或填写文章作者'],
+				'thumbnail'		=>['title'=>'自定义缩略图',	'type'=>'image','rows'=>4,'description'=>'自定义缩略图地址.注意:设置后无须另行设置特色图像'],
+			]
+		];
+	}
 	return $post_options;
+});
+register_activation_hook( __FILE__, function () {
+    add_role( 'weuser', '微信组', array( 'read' => true, 'edit_posts' => false ) );
 });
 // 时间格式
 function time_tran($the_time) {

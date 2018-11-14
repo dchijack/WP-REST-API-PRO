@@ -45,13 +45,28 @@ function get_tencent_video_filter($url_ID) {
 
 add_filter( 'the_content',function ($content) {
 	$post_id = get_the_ID();
-	$video_id = get_post_meta($post_id,'video',true);
-	$audio_id = get_post_meta($post_id,'audio',true);
-	$thumbnail = get_post_thumbnail($post_id);
-	$format = get_post_format($post_id);
+	if (get_setting_option('media_on')) {
+		if (get_post_meta( $post_id, 'cover' ,true )) {
+			$cover_url = get_post_meta( $post_id, 'cover' ,true );
+		} else {
+			$cover_url = get_post_thumbnail($post_id);
+		}
+		if (get_post_meta( $post_id, 'author' ,true )){
+			$media_author = 'name="'.get_post_meta( $post_id, 'author' ,true ).'" ';
+		} else {
+			$media_author = '';
+		}
+		if (get_post_meta( $post_id, 'title' ,true )){
+			$media_title = 'title="'.get_post_meta( $post_id, 'title' ,true ).'" ';
+		} else {
+			$media_title = '';
+		}
+		$video_id = get_post_meta($post_id,'video',true);
+		$audio_id = get_post_meta($post_id,'audio',true);
+	}
 	if (!empty($video_id)) {
 		$video = get_tencent_video_filter(strip_tags(trim($video_id)));
-		$video_code = '<p><video poster="'.$thumbnail.'" src="'.$video.'"></video></p>';
+		$video_code = '<p><video '.$media_author.$media_title.' poster="'.$cover_url.'" src="'.$video.'"></video></p>';
 		return $content.$video_code;
 	} else {
 		return $content;

@@ -32,6 +32,17 @@ function post_custom_fields_rest($data, $post, $request) {
 			$avatarurls[] = $_avatarurl;       
 		}
 		$_data['avatar']= $avatarurls;
+		if (get_setting_option('media_on')) {
+			if (get_post_meta( $post_id, 'cover' ,true )) {
+				$_data["media"]['cover'] = get_post_meta( $post_id, 'cover' ,true );
+			} else {
+				$_data["media"]['cover'] = get_post_thumbnail($post_id);
+			}
+			$_data["media"]['author'] = get_post_meta( $post_id, 'author' ,true );
+			$_data["media"]['title'] = get_post_meta( $post_id, 'title' ,true );
+			$_data["media"]['video'] = get_post_meta( $post_id, 'video' ,true );
+			$_data["media"]['audio'] = get_post_meta( $post_id, 'audio' ,true );
+		}
 	} else {
 		if (get_setting_option('post_content')) { unset($_data['content'] ); }  	
 	}

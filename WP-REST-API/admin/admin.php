@@ -83,6 +83,7 @@ add_filter('wpjam_settings',function($wpjam_settings){
 					'enposts'=>['title'=>'小程序投稿功能','type'=>'checkbox','description'=>'是否开启小程序文章投稿'],
 					'encomments'=>['title'=>'小程序评论功能','type'=>'checkbox','description'=>'是否开启小程序评论功能'],
 					'approved'=>['title'=>'小程序评论审核','type'=>'checkbox','description'=>'是否开启小程序评论审核'],
+					'media_on'=>['title'=>'小程序视频/音频','type'=>'checkbox','description'=>'是否开启小程序视频/音频内容'],
 					'qvideo'=>['title'=>'解析腾讯视频','type'=>'checkbox','description'=>'视频格式文章,开启解析腾讯视频,仅支持一个视频'],
 					'deletehtml'=>['title'=>'清理HTML标签','type'=>'checkbox','description'=>'是否开启清理分类描述 HTML 标签'],
 					'reupload'=>['title'=>'图片重命名','type'=>'checkbox','description'=>'是否开启上传图片重命名,注意主题是否有冲突'],
