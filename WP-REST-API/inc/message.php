@@ -104,7 +104,6 @@ function send_message_data($openid,$template_id,$postid,$form_id,$total_fee,$fla
                     $postdata['data']=$data2; 
                 }
                 $postdata['touser']=$openid;
-                $postdata['template_id']=$template_id;
                 $postdata['page']=$page;
                 $postdata['form_id']=$form_id;
                 $postdata['template_id']=$template_id;

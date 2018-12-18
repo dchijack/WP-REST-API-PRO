@@ -4,6 +4,8 @@
 
 技术支持：https://www.imahui.com
 
+> # 插件已停止更新维护，已经进行新版插件设计，如需了解，请访问个人博客：[https://www.imahui.com](https://www.imahui.com) . Date: 2018.12.18
+
 ## 使用方法
 
 1、安装 WPJAM BASIC 插件并激活启用
