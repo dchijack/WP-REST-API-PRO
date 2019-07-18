@@ -1,46 +1,9 @@
 # WordPress 连接微信小程序 API 增强插件 WP-REST-API-PRO
 
-基于 [守望轩](https://github.com/iamxjb/wp-rest-api-for-app) 开源 WordPress 版微信小程序插件，采用 WordPress 果酱开发的插件 [WPJAM BASIC](https://wordpress.org/plugins/wpjam-basic/) 框架
+> 插件已移除，新版开源插件请关注公众号 WordPressTalk 回复 9527 获取公测，后期将更新开源 Github Date:2019.07.18
 
-技术支持：https://www.imahui.com
+> 技术支持：https://www.imahui.com
 
-#### 插件停止更新维护，了解新版插件动态，请访问[个人博客](https://www.imahui.com)  Date: 2018.12.18
-
-> 加入知识星球获取新版 WP REST API 插件
-
-> ![知识星球](https://www.imahui.com/uploads/xiaomiq-code.jpg)
-
-## 使用方法
-
-1、安装 WPJAM BASIC 插件并激活启用
-
-2、点击右上角绿色 Clone or download 下拉选项，点击 Download ZIP。
-
-3、解压下载的压缩包，把 WP-REST-API 目录上传至 WordPress 插件目录，并在网站后台插件启用。
-
-## 微信小程序
-
-> 支持 WordPress + One 微信小程序：https://github.com/dchijack/WordPress-One-MinAPP
-
-## 体验小程序
-
-![V微语录](https://github.com/dchijack/WP-REST-API/raw/master/vyulu.jpg) ![国际航空查询](https://github.com/dchijack/WP-REST-API/raw/master/cazixun.jpg) ![艾码汇](https://github.com/dchijack/WP-REST-API/raw/master/imahui.jpg)
-
-## 注意事项
-
-> 必须下载安装 WPJAM BASIC 并激活启用
-
-## 后台截图
-
-![基本设置](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-basic.png)
-
-![辅助选项](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-plugin.png)
-
-![文章类型](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-custom.png)
-
-![广告功能](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-adsense.png)
-
-![API说明](https://github.com/dchijack/WPJAM-WP-REST-API/blob/master/wp-api-about.png)
 
 ## 更新日志
 
@@ -114,7 +77,7 @@
 
 ## 微信公众号
 
-> 欢迎关注个人微信公众号，扫描下方二维码。后期关于插件，小程序等信息，将第一时间发布在公众号或个人博客：https://www.imahui.com
+> 欢迎关注个人微信公众号，扫描下方二维码。后期关于插件，小程序等信息，将在公众号或个人博客发布：https://www.imahui.com
 
 ![微信公众号二维码](https://github.com/dchijack/WP-REST-API/blob/master/qrcode.jpg)
 
