@@ -6,7 +6,7 @@
 
 # WordPress Mini Program API 插件正式开源发布
 
-> https://github.com/dchijack/wp-mini-program
+> 获取新版 WordPress 连接小程序 API 插件，[点击这里](https://github.com/dchijack/wp-mini-program)
 
 ## 更新日志
 
